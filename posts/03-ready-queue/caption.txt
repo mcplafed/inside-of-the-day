@@ -1,0 +1,27 @@
+INSIDE OF THE DAY #3
+
+When is an autonomous coding session actually done?
+
+Not when the current PRs are merged.
+
+Merged PRs only tell you that previously dispatched work is finishing.
+They do not tell you whether useful work remains.
+
+The real stopping condition is simpler:
+
+The ready issue queue is empty.
+
+Until then, the system should keep doing useful work:
+
+- claim the next ready issue;
+- prioritize bugs first;
+- refill parallel work as agents finish;
+- turn newly discovered follow-ups into ready issues;
+- stop only when there is nothing safe and actionable left.
+
+PR count measures a delivery stage.
+A ready queue measures remaining opportunity.
+
+For autonomous systems, confusing the two is how productive capacity quietly turns into idle time.
+
+#InsideOfTheDay #AIAgents #EngineeringManagement #AgenticAI
