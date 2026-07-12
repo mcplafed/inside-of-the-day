@@ -1,0 +1,24 @@
+INSIDE OF THE DAY #2
+
+A question for the founder should block a task - not the agent system.
+
+The common failure mode in autonomous work is simple:
+an agent reaches a decision it cannot make, asks a question, and then stops.
+
+That turns one unanswered question into idle capacity.
+
+A better pattern:
+
+- Park the blocked task.
+- Continue with other ready work.
+- Keep a running list of founder questions.
+- Put that list in the work summary.
+- Let the founder answer several decisions in one pass later.
+
+The work summary is not just a progress report.
+
+It is an asynchronous decision interface between the founder and the agent system.
+
+Human attention should be reserved for decisions that need it - not used as a synchronous dependency for every agent turn.
+
+#InsideOfTheDay #AIAgents #AgenticAI #SoftwareEngineering

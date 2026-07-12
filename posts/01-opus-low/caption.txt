@@ -1,0 +1,31 @@
+INSIDE OF THE DAY #1
+
+I switched my coding agent from Sonnet 5 high to Opus 4.8 low.
+
+It got cheaper - and better.
+
+Anthropic's updated BrowseComp chart shows a counterintuitive operating point:
+
+- Opus 4.8 at low effort: about 78% pass rate at roughly $4-5 per task
+- Sonnet 5 at high effort: about 77% pass rate at roughly $5-6 per task
+
+For that benchmark, Sonnet high is dominated: more spend for a slightly worse result.
+
+This is not a universal claim about coding agents. BrowseComp measures agentic search, and outcomes depend on the agent harness: tools, compaction, context, task budget, and prompts.
+
+But it is a useful lesson:
+
+Do not compare model names.
+Compare model x effort x your harness.
+
+High effort is not automatically higher quality. Sometimes it is just a more expensive way to get a worse result.
+
+Sources:
+- Anthropic: Introducing Claude Sonnet 5
+  https://www.anthropic.com/news/claude-sonnet-5
+- Anthropic Cookbook: reproduce agentic-search benchmark scores
+  https://platform.claude.com/cookbook/evals-agentic-search-reproduce-agentic-search-benchmarks
+- Anthropic API pricing
+  https://platform.claude.com/docs/en/about-claude/pricing
+
+#InsideOfTheDay #AIAgents #CodingAgents #Claude

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Opus Low vs Sonnet High</title>
+<style>
+  :root {
+    --ink:#24211f; --muted:#746e68; --paper:#f7f1e8; --white:#fffdf9;
+    --line:#d9d1c7; --orange:#dd6b3d; --yellow:#f2c84b; --dark:#282522;
+    --green:#216b59; --green-bg:#e2f1e9;
+  }
+  * { box-sizing:border-box; }
+  html,body { margin:0; width:1080px; height:1350px; background:var(--paper); }
+  body { font-family: FreeSans, Arial, sans-serif; color:var(--ink); }
+  .poster { position:relative; width:1080px; height:1350px; padding:68px 70px 56px; overflow:hidden; }
+  .eyebrow { font-family:"DejaVu Sans Mono",monospace; color:var(--orange); font-size:19px; letter-spacing:1.4px; text-transform:uppercase; }
+  h1 { font-weight:400; font-size:69px; line-height:1.03; letter-spacing:-2.5px; margin:24px 0 18px; max-width:910px; }
+  h1 strong { font-weight:400; color:var(--orange); }
+  .sub { color:var(--muted); font-size:28px; line-height:1.32; max-width:885px; margin:0 0 38px; }
+  .comparison { position:relative; display:grid; grid-template-columns:1fr 1fr; gap:26px; }
+  .card { background:var(--white); border:2px solid var(--line); border-radius:26px; min-height:440px; padding:31px 30px 28px; }
+  .card.opus { border-color:#c9a833; box-shadow:0 8px 0 rgba(242,200,75,.17); }
+  .card.sonnet { border-color:#e7a98e; }
+  .tag { display:inline-block; border-radius:999px; padding:9px 14px 8px; font-family:"DejaVu Sans Mono",monospace; font-size:17px; letter-spacing:.3px; }
+  .opus .tag { background:#fff2ba; color:#6c5400; }
+  .sonnet .tag { background:#fde5da; color:#873918; }
+  .model { margin:20px 0 7px; font-size:38px; letter-spacing:-1px; line-height:1; }
+  .effort { font-family:"DejaVu Sans Mono",monospace; font-size:23px; color:var(--muted); }
+  .metric { margin-top:30px; padding-top:24px; border-top:2px solid #ebe5dc; }
+  .metric b { display:block; font-weight:400; font-size:51px; line-height:1; letter-spacing:-2px; }
+  .metric span { display:block; color:var(--muted); font-size:20px; margin-top:8px; }
+  .win { margin-top:31px; background:var(--green-bg); border:1px solid #b9ddcc; color:var(--green); padding:16px 17px; border-radius:14px; font-size:21px; line-height:1.2; }
+  .loss { margin-top:31px; color:#7a4938; background:#fbefea; border:1px solid #edd2c7; padding:16px 17px; border-radius:14px; font-size:21px; line-height:1.2; }
+  .annotation { position:relative; margin:39px 0 30px; background:var(--dark); color:#fffaf2; border-radius:24px; padding:28px 30px 27px; }
+  .annotation .small { font-family:"DejaVu Sans Mono",monospace; color:#f2c84b; text-transform:uppercase; letter-spacing:1px; font-size:17px; }
+  .annotation p { font-size:31px; line-height:1.15; letter-spacing:-.7px; margin:10px 0 0; }
+  .annotation strong { font-weight:400; color:#f2c84b; }
+  .caveat { border-left:5px solid var(--orange); padding:7px 0 7px 18px; color:#5d5752; font-size:21px; line-height:1.32; }
+  footer { position:absolute; left:70px; right:70px; bottom:49px; border-top:2px solid var(--line); padding-top:20px; display:flex; justify-content:space-between; align-items:flex-start; font-family:"DejaVu Sans Mono",monospace; font-size:15px; line-height:1.4; color:#625c56; }
+  footer .source { max-width:600px; }
+  footer .handle { color:var(--ink); white-space:nowrap; }
+  .dots { position:absolute; top:35px; right:48px; opacity:.27; }
+  .dots i { display:inline-block; width:7px; height:7px; border-radius:50%; background:var(--orange); margin:4px; }
+</style>
+</head>
+<body>
+<main class="poster">
+  <div class="dots"><i></i><i></i><i></i><i></i><i></i><i></i><br><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="eyebrow">Agent configuration insight</div>
+  <h1>I switched my coding agent from <strong>Sonnet 5 high</strong> to <strong>Opus 4.8 low.</strong></h1>
+  <p class="sub">It got cheaper — and better. Anthropic’s updated BrowseComp chart shows why this can happen.</p>
+
+  <section class="comparison" aria-label="Benchmark comparison">
+    <article class="card opus">
+      <span class="tag">BETTER OPERATING POINT</span>
+      <div class="model">Claude Opus 4.8</div>
+      <div class="effort">LOW EFFORT</div>
+      <div class="metric"><b>~78%</b><span>BrowseComp pass rate</span></div>
+      <div class="metric"><b>~$4–5</b><span>benchmark cost per task</span></div>
+      <div class="win">Lower cost. Higher pass rate.</div>
+    </article>
+    <article class="card sonnet">
+      <span class="tag">DOMINATED HERE</span>
+      <div class="model">Claude Sonnet 5</div>
+      <div class="effort">HIGH EFFORT</div>
+      <div class="metric"><b>~77%</b><span>BrowseComp pass rate</span></div>
+      <div class="metric"><b>~$5–6</b><span>benchmark cost per task</span></div>
+      <div class="loss">More spend. Slightly worse result.</div>
+    </article>
+  </section>
+
+  <section class="annotation">
+    <div class="small">The lesson</div>
+    <p>Do not compare <strong>model names.</strong><br>Compare <strong>model × effort × harness.</strong></p>
+  </section>
+
+  <p class="caveat">This is one agentic-search benchmark — not a universal coding claim. But it is a clear prompt to benchmark your own agent before paying for more reasoning.</p>
+
+  <footer>
+    <div class="source">Source: Anthropic, “Introducing Claude Sonnet 5”<br>anthropic.com/news/claude-sonnet-5</div>
+    <div class="handle">@vitalylobachev</div>
+  </footer>
+</main>
+</body>
+</html>

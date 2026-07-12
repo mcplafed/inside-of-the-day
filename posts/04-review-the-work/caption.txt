@@ -1,0 +1,29 @@
+INSIDE OF THE DAY #4
+
+One small rule in my global CLAUDE.md:
+
+Do not add AI or agent attribution to commits and PRs.
+
+No "Co-Authored-By" trailer.
+No "Generated with..." footer.
+No session provenance appended to the change.
+
+This is not about hiding the tools used to build software.
+
+It is about making code review start in the right place:
+
+- the diff;
+- the reasoning;
+- the tests;
+- the CI result;
+- the operational consequence.
+
+An AI attribution label can become a cognitive shortcut before review even begins. It can create instant distrust - or unearned trust - before anyone has evaluated the change itself.
+
+A PR is a proposal. Its quality should be established by review and evidence, not by a footer.
+
+The human owns the change. The assistant is a tool, not a co-author.
+
+Keep the review focused on the work that will ship.
+
+#InsideOfTheDay #AIAgents #CodeReview #SoftwareEngineering

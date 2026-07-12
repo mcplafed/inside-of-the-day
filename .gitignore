@@ -1,0 +1,5 @@
+# Runtime-only publication state
+*.json
+
+# Local system files
+.DS_Store

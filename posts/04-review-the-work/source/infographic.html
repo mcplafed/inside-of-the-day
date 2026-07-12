@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Review the diff, not the label</title>
+<style>
+:root{--paper:#f7f1e7;--ink:#1f2b2a;--muted:#66706b;--line:#d7cec0;--rust:#bd5a3c;--rustDark:#8f3e29;--sage:#dfe9dd;--sageDark:#31574d;--white:#fffdfa}*{box-sizing:border-box}html,body{margin:0;width:1080px;height:1350px;background:var(--paper)}body{color:var(--ink);font-family:Arial,Helvetica,sans-serif}.canvas{width:1080px;height:1350px;padding:72px 76px 58px;display:flex;flex-direction:column;overflow:hidden}.eyebrow{font:600 22px/1.2 "Courier New",monospace;letter-spacing:2px;color:var(--rustDark);text-transform:uppercase}h1{font-family:Georgia,"Times New Roman",serif;margin:22px 0 13px;font-size:72px;line-height:.98;letter-spacing:-3px;max-width:870px}.dek{font-size:26px;line-height:1.32;color:var(--muted);max-width:830px;margin:0 0 37px}.principle{border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);padding:34px 0;display:grid;grid-template-columns:1fr 1.13fr;gap:32px}.card{border:2px solid var(--ink);border-radius:17px;padding:28px;min-height:385px;background:var(--white)}.card.no{background:#f4ded5;border-left:9px solid var(--rust)}.card.yes{background:var(--sage);border-left:9px solid var(--sageDark)}.label{font:700 17px/1 "Courier New",monospace;letter-spacing:1.2px;text-transform:uppercase}.label.no{color:var(--rustDark)}.label.yes{color:var(--sageDark)}h2{font:700 36px/1.04 Georgia,serif;letter-spacing:-.8px;margin:19px 0 18px}.trailer{font:700 18px/1.25 "Courier New",monospace;color:var(--rustDark);padding:13px 0;border-top:1px solid #d6a999}.trailer:first-of-type{border-top:0}.strike{position:relative;display:inline-block}.strike:after{content:'';position:absolute;left:-3px;right:-3px;top:48%;border-top:4px solid var(--rust);transform:rotate(-4deg)}.review{display:grid;gap:11px;margin-top:22px}.signal{height:48px;border:2px solid var(--sageDark);border-radius:7px;background:var(--white);display:flex;align-items:center;padding:0 14px;font:700 16px/1 "Courier New",monospace;color:var(--sageDark)}.signal:before{content:'';width:12px;height:12px;border-radius:50%;background:var(--sageDark);margin-right:11px}.why{padding:34px 0 22px}.why h3{font:700 30px/1.1 Georgia,serif;letter-spacing:-.5px;margin:0 0 17px}.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.why-grid p{margin:0;border-top:2px solid var(--line);padding-top:12px;font-size:20px;line-height:1.3;color:#48514d}.takeaway{margin-top:auto;border-top:2px solid var(--ink);padding:23px 0 20px;display:grid;grid-template-columns:58px 1fr;gap:18px;align-items:center}.mark{width:58px;height:58px;border-radius:50%;background:var(--rust);display:grid;place-items:center;color:white;font:700 30px/1 Georgia,serif}.takeaway strong{display:block;font:700 29px/1.08 Georgia,serif;letter-spacing:-.6px}.takeaway span{display:block;margin-top:7px;font-size:19px;line-height:1.25;color:var(--muted)}footer{display:flex;justify-content:space-between;font:600 15px/1.2 "Courier New",monospace;color:var(--muted)}
+</style>
+</head>
+<body>
+<main class="canvas">
+ <div class="eyebrow">Insight of the day 03</div>
+ <h1>Review the diff.<br>Not the label.</h1>
+ <p class="dek">A PR is a proposal. Its quality comes from evidence, not an attribution footer.</p>
+ <section class="principle" aria-label="Remove AI attribution trailers and focus code review on evidence">
+  <article class="card no"><div class="label no">Remove the shortcut</div><h2>Do not add agent co-authors</h2><div class="trailer"><span class="strike">Co-Authored-By: Claude</span></div><div class="trailer"><span class="strike">Generated with Claude Code</span></div><div class="trailer"><span class="strike">Claude session trailer</span></div></article>
+  <article class="card yes"><div class="label yes">Review the evidence</div><h2>What should decide the PR?</h2><div class="review"><div class="signal">THE DIFF</div><div class="signal">THE REASONING</div><div class="signal">THE TESTS</div><div class="signal">THE CI RESULT</div></div></article>
+ </section>
+ <section class="why"><h3>Why keep the footer out of it?</h3><div class="why-grid"><p>Labels can create instant distrust before the review starts.</p><p>They can also create unearned trust. Neither evaluates the change.</p></div></section>
+ <section class="takeaway"><div class="mark">=</div><div><strong>The human owns the change. The assistant is a tool.</strong><span>Keep review focused on the work that will ship.</span></div></section>
+ <footer><span>github.com/vlobachev/agent-automation-kit</span><span>@vitalylobachev</span></footer>
+</main>
+</body>
+</html>
