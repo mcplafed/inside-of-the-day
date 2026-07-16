@@ -1,0 +1,18 @@
+INSIDE OF THE DAY #5
+My agents do not have one memory.
+They use three different graphs for three different questions.
+Graphiti is temporal memory: what happened, changed, or was decided. Agents recall it before acting and write durable outcomes back, with provenance and a sense of what was true then versus now.
+Cognee is document knowledge: runbooks, architecture docs, policies, guidance. Semantic plus graph retrieval inside an explicit dataset.
+Graphify is code structure: calls, imports, inheritance, dependencies, traced from a locally built AST graph instead of flat text chunks.
+
+In one practical loop an agent recalls decisions in Graphiti, retrieves the relevant docs in Cognee, traces the affected code in Graphify, executes, and then returns durable decisions and outcomes to Graphiti while changed docs and code are reindexed in their own layers.
+
+Why all three? Because in my architecture none replaces the other two. Graphiti is not where I query callers. Graphify is not where I record why a policy changed last quarter. Cognee is not my timeline of superseded decisions.
+
+Different questions want different graphs. That is the whole point.
+
+Graphiti: https://github.com/getzep/graphiti
+Cognee: https://github.com/topoteretes/cognee
+Graphify: https://github.com/Graphify-Labs/graphify
+
+#InsideOfTheDay #AIAgents #AgentMemory #KnowledgeGraphs
