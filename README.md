@@ -12,7 +12,7 @@ Each post is a compact, evidence-backed operating insight about AI-assisted engi
 | 2 | A founder question should block a task - not the agent system. | approved, scheduled |
 | 3 | An autonomous session is done when the ready queue is empty. | approved, scheduled |
 | 4 | Review the work, not the AI label. | approved, scheduled |
-| 5 | My agents do not have one memory. | draft for review |
+| 5 | Graphiti vs Graphify vs Cognee? I use them all. Here's why. | draft for review |
 
 See [strategy/series-plan.md](strategy/series-plan.md) for the editorial and publication plan.
 

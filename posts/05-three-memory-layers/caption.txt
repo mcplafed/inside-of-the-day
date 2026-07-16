@@ -1,6 +1,8 @@
 INSIDE OF THE DAY #5
-My agents do not have one memory.
-They use three different graphs for three different questions.
+Graphiti vs Graphify vs Cognee?
+I use them all. Here's why.
+
+My agents use three different graphs for three different questions.
 Graphiti is temporal memory: what happened, changed, or was decided. Agents recall it before acting and write durable outcomes back, with provenance and a sense of what was true then versus now.
 Cognee is document knowledge: runbooks, architecture docs, policies, guidance. Semantic plus graph retrieval inside an explicit dataset.
 Graphify is code structure: calls, imports, inheritance, dependencies, traced from a locally built AST graph instead of flat text chunks.

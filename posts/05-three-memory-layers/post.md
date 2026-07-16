@@ -1,8 +1,8 @@
-# Inside of the Day #5 - Agent memory architecture
+# Graphiti vs Graphify vs Cognee? I use them all. Here's why.
 
 ## Core insight
 
-Agent memory is not one database. My agents use three different graphs for three different questions.
+Graphiti, Graphify, and Cognee can look like competing answers to the same "agent memory" problem. I use all three because my agents ask three different kinds of questions.
 
 ## Mechanism
 
