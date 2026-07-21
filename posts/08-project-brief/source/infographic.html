@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A reusable project brief — I stopped re-explaining my project in every chat</title>
+<style>
+  :root {
+    --ink:#24211f; --muted:#746e68; --paper:#f7f1e8; --white:#fffdf9;
+    --line:#d9d1c7; --orange:#dd6b3d; --yellow:#f2c84b; --dark:#282522;
+    --green:#216b59; --green-bg:#e2f1e9; --green-line:#b9ddcc;
+    --cold-bg:#f1ece4; --cold-line:#ddd4c8; --cold-ink:#8a8177;
+  }
+  * { box-sizing:border-box; }
+  html,body { margin:0; width:1080px; height:1350px; background:var(--paper); }
+  body { font-family: FreeSans, Arial, sans-serif; color:var(--ink); }
+  .poster { position:relative; width:1080px; height:1350px; padding:56px 70px 52px; overflow:hidden; }
+  .eyebrow { font-family:"DejaVu Sans Mono",monospace; color:var(--orange); font-size:19px; letter-spacing:1.4px; text-transform:uppercase; }
+  h1 { font-weight:400; font-size:66px; line-height:1.02; letter-spacing:-2.4px; margin:15px 0 11px; }
+  h1 strong { font-weight:400; color:var(--orange); }
+  .sub { color:var(--muted); font-size:27px; line-height:1.3; max-width:930px; margin:0 0 22px; }
+
+  .stage { display:grid; grid-template-columns:1fr 1fr; gap:26px; align-items:stretch; min-height:548px; }
+  .panel { border:2px solid var(--line); border-radius:24px; padding:22px 22px 20px; background:var(--white); display:flex; flex-direction:column; }
+  .panel .cap { font-family:"DejaVu Sans Mono",monospace; font-size:16px; letter-spacing:.6px; text-transform:uppercase; display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; }
+  .panel .cap b { font-weight:400; }
+  .panel .tag { margin-top:auto; padding-top:16px; font-family:"DejaVu Sans Mono",monospace; font-size:15.5px; line-height:1.42; }
+
+  /* LEFT — every chat from zero */
+  .cold { background:#faf6ef; border-color:var(--cold-line); }
+  .cold .cap { color:var(--cold-ink); }
+  .cold .cap b { color:var(--warm-ink,#a3573a); }
+  .chat { border:2px solid var(--cold-line); border-radius:14px; padding:12px 13px 12px; margin-bottom:13px; background:var(--white); }
+  .chat .ctx { background:#fbe4d8; border:1.5px dashed #e6a988; border-radius:9px; padding:8px 10px; font-family:"DejaVu Sans Mono",monospace; font-size:14px; line-height:1.32; color:#a3573a; }
+  .chat .ctx .re { display:block; font-size:12px; letter-spacing:.4px; color:#c07a52; margin-bottom:3px; }
+  .chat .q { margin-top:9px; font-size:16.5px; color:#5d5752; line-height:1.2; }
+  .cold .tag { color:#a3573a; border-top:1.5px solid var(--cold-line); }
+
+  /* RIGHT — written once */
+  .good { background:var(--green-bg); border-color:var(--green-line); }
+  .good .cap { color:var(--green); }
+  .good .cap b { color:var(--green); }
+  .brief { background:var(--white); border:2px solid var(--green-line); border-radius:16px; padding:15px 16px 14px; box-shadow:0 6px 0 rgba(33,107,89,.10); }
+  .brief .pill { display:inline-block; background:#cdeadd; color:var(--green); border-radius:999px; padding:6px 12px 5px; font-family:"DejaVu Sans Mono",monospace; font-size:14.5px; letter-spacing:.4px; }
+  .brief .items { margin-top:11px; font-size:17px; line-height:1.4; color:#33544b; }
+  .fan { display:flex; align-items:center; gap:10px; margin:14px 2px 13px; }
+  .fan .dash { flex:1; border-top:3px solid var(--green-line); }
+  .fan .lbl { font-family:"DejaVu Sans Mono",monospace; font-size:13.5px; letter-spacing:.3px; color:var(--green); text-transform:uppercase; white-space:nowrap; }
+  .minis { display:flex; flex-direction:column; gap:11px; }
+  .mini { border:2px solid var(--green-line); border-radius:12px; padding:10px 12px; background:var(--white); font-size:16.5px; color:#33544b; display:flex; align-items:center; gap:9px; }
+  .mini .dot { width:9px; height:9px; border-radius:50%; background:var(--green); flex:none; }
+  .good .tag { color:#33544b; border-top:1.5px solid var(--green-line); }
+
+  .annotation { margin:22px 0 18px; background:var(--dark); color:#fffaf2; border-radius:22px; padding:23px 30px 22px; }
+  .annotation .small { font-family:"DejaVu Sans Mono",monospace; color:var(--yellow); text-transform:uppercase; letter-spacing:1px; font-size:16px; }
+  .annotation p { font-size:29px; line-height:1.18; letter-spacing:-.6px; margin:10px 0 0; }
+  .annotation strong { font-weight:400; color:var(--yellow); }
+
+  .caveat { border-left:5px solid var(--orange); padding:6px 0 6px 18px; color:#5d5752; font-size:20px; line-height:1.34; }
+
+  footer { position:absolute; left:70px; right:70px; bottom:44px; border-top:2px solid var(--line); padding-top:18px; display:flex; justify-content:space-between; align-items:flex-start; font-family:"DejaVu Sans Mono",monospace; font-size:15px; line-height:1.45; color:#625c56; }
+  footer .source { max-width:740px; }
+  footer .handle { color:var(--ink); white-space:nowrap; }
+  .dots { position:absolute; top:33px; right:48px; opacity:.27; }
+  .dots i { display:inline-block; width:7px; height:7px; border-radius:50%; background:var(--orange); margin:4px; }
+</style>
+</head>
+<body>
+<main class="poster">
+  <div class="dots"><i></i><i></i><i></i><i></i><i></i><i></i><br><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="eyebrow">Inside of the Day #8 — A reusable project brief</div>
+  <h1>I stopped <strong>re-explaining</strong> my project in every chat.</h1>
+  <p class="sub">Write the standing context once — attach it to the workspace, not the message — and every new chat starts from the same baseline.</p>
+
+  <section class="stage" aria-label="Re-typed context vs one reusable brief">
+    <!-- LEFT: every chat re-types the same block -->
+    <div class="panel cold">
+      <div class="cap"><span>Every chat from zero</span><b>↻ retyped</b></div>
+
+      <div class="chat">
+        <div class="ctx"><span class="re">↻ same context, again</span>who I am · the project · goals · rules</div>
+        <div class="q">+ today's question</div>
+      </div>
+      <div class="chat">
+        <div class="ctx"><span class="re">↻ same context, again</span>who I am · the project · goals · rules</div>
+        <div class="q">+ another question</div>
+      </div>
+      <div class="chat">
+        <div class="ctx"><span class="re">↻ same context, again</span>who I am · the project · goals · rules</div>
+        <div class="q">+ one more question</div>
+      </div>
+
+      <div class="tag">Re-typed every turn · two chats drift into two set-ups</div>
+    </div>
+
+    <!-- RIGHT: one brief feeds every chat -->
+    <div class="panel good">
+      <div class="cap"><span>Written once</span><b>✓ baseline</b></div>
+
+      <div class="brief">
+        <span class="pill">PROJECT BRIEF</span>
+        <div class="items">who I am · the project · goals · rules<br>CLAUDE.md · Claude Project · ChatGPT Project</div>
+      </div>
+
+      <div class="fan"><div class="dash"></div><div class="lbl">loaded into every chat ↓</div><div class="dash"></div></div>
+
+      <div class="minis">
+        <div class="mini"><span class="dot"></span>today's question</div>
+        <div class="mini"><span class="dot"></span>another question</div>
+        <div class="mini"><span class="dot"></span>one more question</div>
+      </div>
+
+      <div class="tag">Every chat starts already knowing it</div>
+    </div>
+  </section>
+
+  <section class="annotation">
+    <div class="small">The mechanism</div>
+    <p>The brief is <strong>loaded into context at the start of every conversation</strong> in that space.<br>Author the standing context once — stop paying for it every turn.</p>
+  </section>
+
+  <p class="caveat">It's context, not a contract — the model treats a brief as guidance, with no guarantee of strict compliance. Keep it short and unambiguous; enforce hard rules outside the file.</p>
+
+  <footer>
+    <div class="source">Sources: Anthropic — “How Claude remembers your project” &amp; “Manage projects” · OpenAI — “Projects in ChatGPT” · verified 2026-07-21</div>
+    <div class="handle">@vitalylobachev</div>
+  </footer>
+</main>
+</body>
+</html>
