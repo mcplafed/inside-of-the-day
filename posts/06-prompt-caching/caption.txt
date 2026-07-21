@@ -1,0 +1,24 @@
+INSIDE OF THE DAY #6
+Prompt caching: put the stable part first.
+
+Every call to a model resends the same context. The system instructions. The tools. The examples. The project docs. On a long agent loop or a busy chat, you are paying full price to send the same opening bytes over and over.
+
+There is a cheaper order.
+
+Both Anthropic and OpenAI cache your prompt on an exact prefix match. So put the stable, repeated part first - instructions, tools, examples, documents - and put the changing part last - the user's request, retrieved chunks, timestamps.
+
+Then on every repeat call the long prefix is a cache hit. Anthropic documents cache reads at about a tenth of the normal input price (0.1x base input). OpenAI's cached input lands at a similar rate on current models. You also tend to get a faster first token, though neither vendor puts a number on the speed.
+
+The catch is in the word exact. Edit one byte inside the prefix - reorder a tool, swap an example, change a line in a doc - and it is a cache miss: you pay full price on the whole prefix again. Cache reads are cheaper, not free (roughly 10% of input), and the minimum prefix size and cache lifetime vary by model.
+
+The reason this matters: it is a harness decision, not a smarter-model trick. You are not changing what you ask. You are changing where the stable context sits in the request. Order the prompt well once and it pays back on every repeat.
+
+Cheapest optimisation I know is prompt order.
+
+Sources (verified 2026-07-21):
+- Anthropic, "Prompt caching": https://platform.claude.com/docs/en/build-with-claude/prompt-caching
+- Anthropic pricing: https://platform.claude.com/docs/en/about-claude/pricing
+- OpenAI, "Prompt caching": https://developers.openai.com/api/docs/guides/prompt-caching
+- OpenAI pricing: https://developers.openai.com/api/docs/pricing
+
+#InsideOfTheDay #AI #PromptEngineering #LLM #AIEngineering
