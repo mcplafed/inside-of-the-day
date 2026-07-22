@@ -1,5 +1,5 @@
 INSIDE OF THE DAY #11
-A question is not a call to action.
+Claude: a question is not a call to action.
 
 I used to ask an agent, "Why did this happen?" Then it would immediately say, "Fixed."
 

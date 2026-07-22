@@ -2,7 +2,7 @@
 
 ## Title
 
-**I stopped letting my agent turn every question into a fix.**
+**I stopped letting Claude turn every question into a fix.**
 
 ## First-person thesis
 
@@ -58,7 +58,7 @@ This is a first-person operating practice, not a measured universal performance 
 ## Visual contract
 
 - Eyebrow: `Inside of the Day #11 - Questions are not actions`.
-- Headline: **I asked why. My agent said "Fixed." That was the problem.**
+- Headline: **I asked Claude why. Claude said "Fixed." That was the problem.**
 - Left path: user asks `Why did this happen?` -> agent immediately changes state ->
   evidence fades -> `Same failure returns`.
 - Right path: user asks the same question -> four-card investigation gate:
