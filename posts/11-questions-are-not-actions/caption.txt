@@ -1,0 +1,29 @@
+INSIDE OF THE DAY #11
+A question is not a call to action.
+
+I used to ask an agent, "Why did this happen?" Then it would immediately say, "Fixed."
+
+That sounds helpful. It is often the opposite.
+
+The error has already happened. If the agent corrects it before investigating, I lose the evidence and still do not know why it happened. The same failure can return in the next run - only with a cleaner chat history.
+
+So I changed one rule in my agent instructions:
+
+A question about an error is an investigation request, not permission to change state.
+
+Before any fix, I want four things:
+- what happened;
+- the evidence;
+- the causal chain;
+- the safeguard that prevents it happening again.
+
+Only then do we decide whether to remediate. The exception is real ongoing harm: contain that first, then investigate.
+
+This is not less autonomous. It is autonomy with an audit trail.
+
+A fast "fixed" response optimizes the conversation.
+A causal explanation plus a recurrence guard improves the system.
+
+When I ask why, do not erase the problem. Help me make sure it does not come back.
+
+#InsideOfTheDay #AI #AIAgents #Claude #AIEngineering
