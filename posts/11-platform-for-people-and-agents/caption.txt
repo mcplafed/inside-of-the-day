@@ -1,0 +1,34 @@
+I stopped treating our internal platform as a portal.
+
+I treat it now as a set of safe, discoverable contracts. It has two users: people and agents.
+
+A portal is a front door built for a person: a UI, a form, a button. But agents already clone repos, call APIs, and open PRs. If the only door is a human UI, the agent screen-scrapes it or gets handed a static admin key. Both are bad. So: one control plane, two front doors. A human uses the portal, an agent uses a typed contract, and both go through the same infrastructure API, policy gates, approval flow, and scoped identity.
+
+Five patterns I build against, each with a human path, an agent path, and one shared contract:
+
+- Discover: one catalog, one template, both paths. Backstage Catalog and Scaffolder.
+- Request infra: a typed CRD/XRD schema the control plane reconciles the same way, whoever authored it. Crossplane Compositions.
+- Gate change: the same PR, the same admission policy, no privileged side door. Kyverno/OPA + GitOps.
+- Prove identity: a short-lived, attested workload identity instead of a static key. SPIFFE/SPIRE, or cloud workload identity.
+- Discover tools: the same typed contract, no UI scraping. OpenAPI, with MCP as one transport.
+
+The line I keep coming back to: agent-ready is not agent-admin. A first-class machine path is not more power — same policy, scoped identity, approval for anything irreversible.
+
+Two boundaries:
+- MCP is an interface transport, not a maturity solution. It exposes the machine path, not your catalog, control plane, policy, or identity.
+- OpenAPI describes the surface, not every side effect. A drifted spec misleads humans and agents alike.
+
+Credit: this framing came from Piotr's ITNEXT piece "Platform Engineering for AI Agents." His agent-readiness dimensions are an author framework on top of the CNCF Platform Engineering Maturity Model, not a CNCF or industry standard. I present them as his.
+
+Sources
+ITNEXT: https://itnext.io/platform-engineering-for-ai-agents-578380c2de47
+CNCF Maturity Model: https://tag-app-delivery.cncf.io/whitepapers/platform-eng-maturity-model/
+Backstage: https://backstage.io/docs/features/software-catalog/
+Crossplane: https://docs.crossplane.io/latest/composition/compositions/
+Kyverno: https://kyverno.io/docs/
+OPA: https://www.openpolicyagent.org/docs/
+SPIFFE/SPIRE: https://spiffe.io/docs/
+OpenAPI: https://www.openapis.org/
+MCP: https://modelcontextprotocol.io/
+
+#InsideOfTheDay #PlatformEngineering #AIAgents #InternalDeveloperPlatform #DevEx
