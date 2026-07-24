@@ -17,6 +17,14 @@ The important constraint: it does not save everything. Raw logs, temporary task 
 
 The output is a better harness: fewer rediscovered mistakes, safer defaults, and less manual work next time.
 
+Here is the universal prompt I use to install that loop:
+
+Create a reusable command called /improve for this agent environment.
+
+First inspect how this system supports reusable commands, skills, prompts, or plugins. Use the simplest native mechanism that makes /improve available in future sessions. Do not invent a parallel framework if the environment already has one.
+
+When /improve is invoked at the end of substantial work, review the session for durable lessons, repeated mistakes, failed assumptions, unnecessary retries, and fragile or overly long shell commands. Turn only evidence-based lessons into the correct memory, scoped instructions, helper scripts, or existing skills. Never persist secrets, raw logs, private data, or temporary task state. Validate every change and report what changed, why, where it was saved, and what was deliberately not persisted.
+
 A long session should not end as chat history. It should make the next session better.
 
 #AIAgents #AgentEngineering #SoftwareEngineering #DeveloperExperience

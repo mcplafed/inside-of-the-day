@@ -19,16 +19,12 @@
     --line:#cdbfa4;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
-  html,body{background:#c9bda2;}
+  html,body{background:var(--parchment);}
   .canvas{
     position:relative;
     width:1080px;height:1350px;
     margin:0 auto;
-    background:
-      linear-gradient(var(--grid) 1px, transparent 1px) 0 0/48px 48px,
-      linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0/48px 48px,
-      var(--parchment);
-    background-blend-mode:multiply,multiply,normal;
+    background:var(--parchment);
     color:var(--ink);
     font-family:-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     padding:56px 64px 0 64px;
