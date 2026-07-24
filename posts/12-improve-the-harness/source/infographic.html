@@ -113,6 +113,15 @@
   .boundary .txt{font-size:20px;font-weight:600;color:var(--ink);line-height:1.25;}
   .boundary .drop{background:#f7ece5;}
 
+  .prompt-note{
+    margin-top:16px;padding:13px 18px;
+    border:1.5px solid var(--terra-soft);border-radius:12px;
+    background:#fff6f0;display:flex;gap:12px;align-items:center;
+  }
+  .prompt-note .mark{font:700 19px/1 "SF Mono",ui-monospace,Menlo,Consolas,monospace;color:var(--terra);}
+  .prompt-note .copy{font-size:18px;line-height:1.25;font-weight:650;color:var(--ink);}
+  .prompt-note .copy span{color:var(--terra);}
+
   /* Takeaway */
   .takeaway{
     margin-top:22px;
@@ -166,7 +175,7 @@
       <div class="panel improve">
         <div class="head">
           <span class="badge mono">RUN /IMPROVE</span>
-          <span class="sub">ask before you close the tab</span>
+          <span class="sub">one prompt gets it ready</span>
         </div>
         <div class="chips">
           <div class="chip">What kept recurring?</div>
@@ -207,6 +216,11 @@
         <div class="lbl">Do not keep</div>
         <div class="txt">secrets, raw logs, temporary state</div>
       </div>
+    </div>
+
+    <div class="prompt-note">
+      <div class="mark">01</div>
+      <div class="copy">Full prompt in the caption. <span>Tested in Claude Code.</span></div>
     </div>
 
     <div class="takeaway">

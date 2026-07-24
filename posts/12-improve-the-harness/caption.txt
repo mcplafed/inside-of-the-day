@@ -17,7 +17,7 @@ The important constraint: it does not save everything. Raw logs, temporary task 
 
 The output is a better harness: fewer rediscovered mistakes, safer defaults, and less manual work next time.
 
-Here is the universal prompt I use to install that loop:
+Here is the universal prompt I use to install that loop. I tested this exact approach in Claude Code: one prompt, then /improve is ready for the next session.
 
 Create a reusable command called /improve for this agent environment.
 
