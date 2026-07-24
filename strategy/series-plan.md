@@ -12,6 +12,7 @@ One sharply framed, evidence-backed operating insight per post. Each post must g
 | 2 | Founder-gated questions | Park the task, keep independent ready work moving, and hand off founder decisions asynchronously. | scheduled |
 | 3 | The real stopping condition | A coding-agent system is done when no safe, actionable work remains in the ready queue - not when the current PRs merge. | scheduled |
 | 4 | Review evidence, not provenance | Review the diff, rationale, tests, CI result, and operational effect rather than an AI attribution label. | scheduled |
+| 12 | Do not bury a long agent session | End substantial sessions with `/improve`: preserve only durable, verified lessons as memory, scoped rules, scripts, or skills. | draft, issue #13 |
 
 ## Rules
 
