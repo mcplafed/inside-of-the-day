@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Graphiti vs Graphify vs Cognee?</title>
+<style>
+:root{--paper:#f7f1e7;--ink:#1f2b2a;--muted:#66706b;--line:#d7cec0;--rust:#bd5a3c;--rustDark:#8f3e29;--sage:#dfe9dd;--sageDark:#31574d;--white:#fffdfa}
+*{box-sizing:border-box}
+html,body{margin:0;width:1080px;height:1350px;background:var(--paper)}
+body{color:var(--ink);font-family:Arial,Helvetica,sans-serif}
+.canvas{width:1080px;height:1350px;padding:66px 72px 50px;display:flex;flex-direction:column;overflow:hidden}
+.eyebrow{font:600 21px/1.2 "Courier New",monospace;letter-spacing:1.6px;color:var(--rustDark);text-transform:uppercase}
+h1{font-family:Arial,Helvetica,sans-serif;font-weight:800;margin:18px 0 5px;font-size:54px;line-height:1;letter-spacing:-2.2px;white-space:nowrap}
+h1 .vs{font-size:.58em;color:var(--muted);font-weight:700;letter-spacing:-.5px}
+.hook{font-size:36px;line-height:1.05;font-weight:800;letter-spacing:-1px;margin:0 0 8px;color:var(--rustDark)}
+.dek{font-size:22px;line-height:1.25;color:var(--muted);max-width:930px;margin:0 0 25px}
+
+/* card layer system */
+.layers{border-top:2px solid var(--ink);padding-top:30px;display:flex;flex-direction:column;gap:22px}
+.card{border:2px solid var(--ink);border-radius:16px;background:var(--white);padding:28px 30px}
+.card h2{font:800 36px/1 Arial,Helvetica,sans-serif;letter-spacing:-.8px;margin:0}
+.card .layer{font:700 17px/1 "Courier New",monospace;letter-spacing:.75px;text-transform:uppercase;color:var(--muted)}
+.card .q{font:700 25px/1.14 Arial,Helvetica,sans-serif;letter-spacing:-.4px;margin:0;color:var(--ink)}
+.card .ex{font:700 16px/1.3 "Courier New",monospace;letter-spacing:.35px;color:var(--muted);text-transform:uppercase}
+.card .role{font-size:20px;line-height:1.22;color:#48514d;margin:0}
+
+/* wide Graphiti card */
+.wide{border-left:9px solid var(--rust);background:#f6e2d9}
+.wide .head{display:flex;align-items:baseline;gap:14px;margin-bottom:12px}
+.wide h2{color:var(--rustDark)}
+.wide .grid{display:grid;grid-template-columns:1.15fr 1fr;gap:26px;align-items:start}
+.wide .q{font-size:27px}
+.wide .right{display:flex;flex-direction:column;gap:10px;border-left:1px solid #dcae9c;padding-left:24px}
+
+/* two lower cards */
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.duo .card{display:flex;flex-direction:column;gap:14px;min-height:322px}
+.duo .head{display:flex;align-items:baseline;gap:12px}
+.cognee{border-left:9px solid var(--sageDark);background:var(--sage)}
+.cognee h2{color:var(--sageDark)}
+.graphify{border-left:9px solid var(--ink);background:#ece6da}
+.graphify h2{color:var(--ink)}
+
+/* workflow loop strip */
+.loop{margin-top:28px;border-top:2px solid var(--ink);padding-top:30px}
+.loop h3{font:700 15px/1 "Courier New",monospace;letter-spacing:1.2px;text-transform:uppercase;color:var(--rustDark);margin:0 0 14px}
+.flow{display:flex;align-items:stretch;gap:0}
+.node{flex:1;border:2px solid var(--ink);border-radius:9px;background:var(--white);padding:16px 8px 15px;text-align:center;display:flex;flex-direction:column;justify-content:center;gap:5px}
+.node .act{font-size:17px;line-height:1.1;font-weight:700;color:var(--ink)}
+.node .lyr{font:700 13px/1 "Courier New",monospace;letter-spacing:.4px;text-transform:uppercase;color:var(--muted)}
+.node.exec{background:var(--ink);border-color:var(--ink)}
+.node.exec .act{color:var(--white)}
+.node.rust{border-color:var(--rustDark)}
+.node.rust .lyr{color:var(--rustDark)}
+.node.sage{border-color:var(--sageDark)}
+.node.sage .lyr{color:var(--sageDark)}
+.arrow{align-self:center;color:var(--rust);font-size:24px;font-weight:700;padding:0 7px;line-height:1}
+.loopnote{margin:16px 0 0;font-size:18px;line-height:1.25;color:var(--muted)}
+.loopnote b{color:var(--rustDark)}
+
+/* takeaway */
+.takeaway{margin-top:auto;border-top:2px solid var(--ink);padding:26px 0 20px;display:grid;grid-template-columns:56px 1fr;gap:18px;align-items:center}
+.mark{width:56px;height:56px;border-radius:50%;background:var(--rust);display:grid;place-items:center;color:#fff;font:700 30px/1 Arial,Helvetica,sans-serif}
+.takeaway strong{display:block;font:800 27px/1.12 Arial,Helvetica,sans-serif;letter-spacing:-.5px}
+.takeaway span{display:block;margin-top:6px;font-size:20px;line-height:1.2;color:var(--muted)}
+footer{display:flex;justify-content:space-between;align-items:center;font:600 16px/1.2 "Courier New",monospace;color:var(--muted)}
+footer .src{letter-spacing:.3px}
+</style>
+</head>
+<body>
+<main class="canvas">
+ <div class="eyebrow">Inside of the Day — Agent memory architecture</div>
+ <h1>Graphiti <span class="vs">vs</span> Graphify <span class="vs">vs</span> Cognee?</h1>
+ <p class="hook">I use them all. Here&rsquo;s why.</p>
+ <p class="dek">Decisions, documents, and code structure are different kinds of context. Each needs a different graph.</p>
+
+ <section class="layers" aria-label="Three memory and knowledge layers">
+  <article class="card wide">
+   <div class="head"><h2>Graphiti</h2><span class="layer">Temporal memory</span></div>
+   <div class="grid">
+    <p class="q">&ldquo;What happened, changed, or was decided?&rdquo;</p>
+    <div class="right">
+     <div class="ex">Decisions · Incidents · Preferences · Historical facts</div>
+     <p class="role">Recall before acting; write durable outcomes back. Temporal provenance preserves what changed.</p>
+    </div>
+   </div>
+  </article>
+
+  <div class="duo">
+   <article class="card cognee">
+    <div class="head"><h2>Cognee</h2><span class="layer">Document knowledge</span></div>
+    <p class="q">&ldquo;What do the documents say?&rdquo;</p>
+    <div class="ex">Runbooks · Architecture docs · Policies · Guidance</div>
+    <p class="role">Semantic + graph retrieval within an explicit dataset.</p>
+   </article>
+   <article class="card graphify">
+    <div class="head"><h2>Graphify</h2><span class="layer">Code structure</span></div>
+    <p class="q">&ldquo;How does this codebase actually work?&rdquo;</p>
+    <div class="ex">Calls · Imports · Inheritance · Dependencies</div>
+    <p class="role">Trace paths and impact from a locally built AST graph.</p>
+   </article>
+  </div>
+ </section>
+
+ <section class="loop" aria-label="One practical agent workflow across the three layers">
+  <h3>One workflow, three graphs</h3>
+  <div class="flow">
+   <div class="node rust"><span class="act">Recall decisions</span><span class="lyr">Graphiti</span></div>
+   <span class="arrow">&rarr;</span>
+   <div class="node sage"><span class="act">Retrieve docs</span><span class="lyr">Cognee</span></div>
+   <span class="arrow">&rarr;</span>
+   <div class="node"><span class="act">Trace code</span><span class="lyr">Graphify</span></div>
+   <span class="arrow">&rarr;</span>
+   <div class="node exec"><span class="act">Execute</span><span class="lyr">&nbsp;</span></div>
+   <span class="arrow">&rarr;</span>
+   <div class="node rust"><span class="act">Update durable knowledge</span><span class="lyr">Graphiti</span></div>
+  </div>
+  <p class="loopnote">Durable decisions and outcomes return to <b>Graphiti</b>; changed docs are reindexed in Cognee and changed code is rebuilt in Graphify — each layer stays current in its own store.</p>
+ </section>
+
+ <section class="takeaway"><div class="mark">≡</div><div><strong>Graphiti remembers time. Cognee retrieves meaning. Graphify maps structure.</strong><span>One agent workflow, three graphs — none replaces the other two.</span></div></section>
+ <footer><span class="src">getzep/graphiti · topoteretes/cognee · Graphify-Labs/graphify</span><span>@vitalylobachev</span></footer>
+</main>
+</body>
+</html>

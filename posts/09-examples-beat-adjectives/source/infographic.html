@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Examples beat adjectives — Show the style, don't describe it</title>
+<style>
+  :root {
+    --ink:#24211f; --muted:#746e68; --paper:#f7f1e8; --white:#fffdf9;
+    --line:#d9d1c7; --orange:#dd6b3d; --yellow:#f2c84b; --dark:#282522;
+    --green:#216b59; --green-bg:#e2f1e9; --green-line:#b9ddcc;
+    --warm-bg:#fbefea; --warm-line:#edd2c7; --warm-ink:#a3573a;
+  }
+  * { box-sizing:border-box; }
+  html,body { margin:0; width:1080px; height:1350px; background:var(--paper); }
+  body { font-family: FreeSans, Arial, sans-serif; color:var(--ink); }
+  .poster { position:relative; width:1080px; height:1350px; padding:56px 70px 52px; overflow:hidden; }
+  .eyebrow { font-family:"DejaVu Sans Mono",monospace; color:var(--orange); font-size:19px; letter-spacing:1.4px; text-transform:uppercase; }
+  h1 { font-weight:400; font-size:64px; line-height:1.02; letter-spacing:-2.3px; margin:15px 0 11px; }
+  h1 strong { font-weight:400; color:var(--orange); }
+  .sub { color:var(--muted); font-size:27px; line-height:1.3; max-width:930px; margin:0 0 22px; }
+
+  .stage { display:grid; grid-template-columns:1fr 1fr; gap:26px; align-items:stretch; min-height:548px; }
+  .panel { border:2px solid var(--line); border-radius:24px; padding:22px 22px 20px; background:var(--white); display:flex; flex-direction:column; }
+  .panel .cap { font-family:"DejaVu Sans Mono",monospace; font-size:16px; letter-spacing:.6px; text-transform:uppercase; display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; }
+  .panel .cap b { font-weight:400; }
+
+  .arrow { text-align:center; font-family:"DejaVu Sans Mono",monospace; font-size:14px; letter-spacing:.4px; text-transform:uppercase; margin:15px 0 14px; }
+
+  /* LEFT — describe it (adjectives) */
+  .miss { background:var(--warm-bg); border-color:var(--warm-line); }
+  .miss .cap { color:var(--warm-ink); }
+  .miss .cap b { color:var(--warm-ink); }
+  .chips { display:flex; flex-wrap:wrap; gap:9px; }
+  .chip { background:#f6d8cb; color:var(--warm-ink); border-radius:999px; padding:11px 16px 10px; font-family:"DejaVu Sans Mono",monospace; font-size:19px; letter-spacing:.3px; }
+  .miss .arrow { color:var(--warm-ink); }
+  .guesses { display:flex; flex-direction:column; gap:10px; }
+  .gs { background:var(--white); border:2px dashed var(--warm-line); border-radius:13px; padding:11px 14px; display:flex; align-items:center; gap:11px; }
+  .gs .q { font-family:"DejaVu Sans Mono",monospace; font-size:15px; background:#f6d8cb; color:var(--warm-ink); border-radius:999px; padding:4px 10px; flex:none; }
+  .gs .bar { height:13px; border-radius:6px; background:#ecccbe; opacity:.75; }
+  .gs:nth-child(1) .bar{ width:70%; } .gs:nth-child(2) .bar{ width:38%; } .gs:nth-child(3) .bar{ width:54%; }
+  .out { border-radius:16px; padding:16px 17px 15px; }
+  .out .lbl { font-family:"DejaVu Sans Mono",monospace; font-size:14px; letter-spacing:.4px; text-transform:uppercase; margin-bottom:11px; }
+  .out .bars { display:flex; flex-direction:column; gap:9px; }
+  .out .bars span { height:15px; border-radius:6px; }
+  .out-miss { background:var(--white); border:2px solid var(--warm-line); margin-top:auto; }
+  .out-miss .lbl { color:var(--warm-ink); }
+  .out-miss .bars span { background:#ecccbe; }
+  .out-miss .bars span:nth-child(1){ width:96%; } .out-miss .bars span:nth-child(2){ width:58%; }
+  .out-miss .bars span:nth-child(3){ width:83%; } .out-miss .bars span:nth-child(4){ width:44%; }
+  .out-miss .note { margin-top:12px; font-size:16.5px; color:var(--warm-ink); line-height:1.28; }
+
+  /* RIGHT — show it (examples) */
+  .match { background:var(--green-bg); border-color:var(--green-line); }
+  .match .cap { color:var(--green); }
+  .match .cap b { color:var(--green); }
+  .exs { display:flex; flex-direction:column; gap:10px; }
+  .ex { background:var(--white); border:2px solid var(--green-line); border-radius:13px; padding:11px 14px; display:flex; align-items:center; gap:11px; font-size:18px; color:#33544b; }
+  .ex .n { font-family:"DejaVu Sans Mono",monospace; font-size:15px; background:#cdeadd; color:var(--green); border-radius:999px; padding:4px 10px; flex:none; }
+  .ex .bar { flex:1; height:13px; border-radius:6px; background:#bfe0d0; }
+  .match .arrow { color:var(--green); }
+  .out-match { background:var(--white); border:2px solid var(--green-line); box-shadow:0 6px 0 rgba(33,107,89,.10); margin-top:auto; }
+  .out-match .lbl { color:var(--green); }
+  .out-match .bars span { background:#8fcbb2; }
+  .out-match .bars span:nth-child(1){ width:92%; } .out-match .bars span:nth-child(2){ width:90%; }
+  .out-match .bars span:nth-child(3){ width:91%; } .out-match .bars span:nth-child(4){ width:89%; }
+  .out-match .note { margin-top:12px; font-size:16.5px; color:#33544b; line-height:1.28; }
+
+  .annotation { margin:22px 0 18px; background:var(--dark); color:#fffaf2; border-radius:22px; padding:23px 30px 22px; }
+  .annotation .small { font-family:"DejaVu Sans Mono",monospace; color:var(--yellow); text-transform:uppercase; letter-spacing:1px; font-size:16px; }
+  .annotation p { font-size:29px; line-height:1.18; letter-spacing:-.6px; margin:10px 0 0; }
+  .annotation strong { font-weight:400; color:var(--yellow); }
+
+  .caveat { border-left:5px solid var(--orange); padding:6px 0 6px 18px; color:#5d5752; font-size:20px; line-height:1.34; }
+
+  footer { position:absolute; left:70px; right:70px; bottom:44px; border-top:2px solid var(--line); padding-top:18px; display:flex; justify-content:space-between; align-items:flex-start; font-family:"DejaVu Sans Mono",monospace; font-size:15px; line-height:1.45; color:#625c56; }
+  footer .source { max-width:740px; }
+  footer .handle { color:var(--ink); white-space:nowrap; }
+  .dots { position:absolute; top:33px; right:48px; opacity:.27; }
+  .dots i { display:inline-block; width:7px; height:7px; border-radius:50%; background:var(--orange); margin:4px; }
+</style>
+</head>
+<body>
+<main class="poster">
+  <div class="dots"><i></i><i></i><i></i><i></i><i></i><i></i><br><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="eyebrow">Inside of the Day #9 — Examples beat adjectives</div>
+  <h1>I stopped <strong>describing</strong> the style. I started <strong>showing</strong> it.</h1>
+  <p class="sub">Adjectives are a blank each model fills in differently. Put 3–5 concrete examples beside the task and say “make the next one like these.”</p>
+
+  <section class="stage" aria-label="Adjectives vs examples">
+    <!-- LEFT: adjectives → off-target -->
+    <div class="panel miss">
+      <div class="cap"><span>Describe it</span><b>adjectives</b></div>
+      <div class="chips">
+        <span class="chip">professional</span>
+        <span class="chip">concise</span>
+        <span class="chip">structured</span>
+      </div>
+      <div class="arrow">↓ the model guesses what you meant</div>
+      <div class="guesses">
+        <div class="gs"><span class="q">reads as?</span><span class="bar"></span></div>
+        <div class="gs"><span class="q">reads as?</span><span class="bar"></span></div>
+        <div class="gs"><span class="q">reads as?</span><span class="bar"></span></div>
+      </div>
+      <div class="arrow">↓</div>
+      <div class="out out-miss">
+        <div class="lbl">Output · off-target</div>
+        <div class="bars"><span></span><span></span><span></span><span></span></div>
+        <div class="note">Different every run — you re-word and try again.</div>
+      </div>
+    </div>
+
+    <!-- RIGHT: examples → matching -->
+    <div class="panel match">
+      <div class="cap"><span>Show it</span><b>3–5 examples</b></div>
+      <div class="exs">
+        <div class="ex"><span class="n">ex 1</span><span class="bar"></span></div>
+        <div class="ex"><span class="n">ex 2</span><span class="bar"></span></div>
+        <div class="ex"><span class="n">ex 3</span><span class="bar"></span></div>
+      </div>
+      <div class="arrow">↓ “make the next one like these”</div>
+      <div class="out out-match">
+        <div class="lbl">Output · matches the pattern</div>
+        <div class="bars"><span></span><span></span><span></span><span></span></div>
+        <div class="note">Consistent run to run — the target is visible.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="annotation">
+    <div class="small">The mechanism</div>
+    <p>Examples are <strong>one of the most reliable ways to steer</strong> format, tone, and structure.<br>Show the pattern instead of describing it — include 3–5.</p>
+  </section>
+
+  <p class="caveat">Examples must be relevant and varied — near-identical or off-target examples teach the wrong pattern. For a genuine one-off, they're not worth assembling.</p>
+
+  <footer>
+    <div class="source">Sources: Anthropic — “Prompting best practices” (use examples) · OpenAI — “Prompt engineering” (few-shot) · verified 2026-07-21</div>
+    <div class="handle">@vitalylobachev</div>
+  </footer>
+</main>
+</body>
+</html>

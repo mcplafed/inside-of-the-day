@@ -12,11 +12,12 @@ One sharply framed, evidence-backed operating insight per post. Each post must g
 | 2 | Founder-gated questions | Park the task, keep independent ready work moving, and hand off founder decisions asynchronously. | scheduled |
 | 3 | The real stopping condition | A coding-agent system is done when no safe, actionable work remains in the ready queue - not when the current PRs merge. | scheduled |
 | 4 | Review evidence, not provenance | Review the diff, rationale, tests, CI result, and operational effect rather than an AI attribution label. | scheduled |
+| 5 | Graphiti vs Graphify vs Cognee? | I use them all because three different graphs answer three different questions in one workflow. | draft for review |
 | 12 | Do not bury a long agent session | End substantial sessions with `/improve`: preserve only durable, verified lessons as memory, scoped rules, scripts, or skills. | draft, issue #13 |
 
 ## Rules
 
-- One insight, one mechanism, one memorable takeaway.
+- Every infographic eyebrow uses `Inside of the Day #<number> — <concise insight topic>` so the series is immediately recognizable.
 - Use primary sources for empirical claims. Keep scope caveats short and visible.
 - Do not turn a benchmark result into a universal conclusion about coding agents.
 - Freeze the exact caption and final visual before scheduling publication.

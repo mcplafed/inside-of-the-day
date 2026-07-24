@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Prompt caching — Put the stable part first</title>
+<style>
+  :root {
+    --ink:#24211f; --muted:#746e68; --paper:#f7f1e8; --white:#fffdf9;
+    --line:#d9d1c7; --orange:#dd6b3d; --yellow:#f2c84b; --dark:#282522;
+    --green:#216b59; --green-bg:#e2f1e9; --green-line:#b9ddcc;
+    --warm-bg:#fbefea; --warm-line:#edd2c7; --warm-ink:#7a4938;
+  }
+  * { box-sizing:border-box; }
+  html,body { margin:0; width:1080px; height:1350px; background:var(--paper); }
+  body { font-family: FreeSans, Arial, sans-serif; color:var(--ink); }
+  .poster { position:relative; width:1080px; height:1350px; padding:56px 70px 52px; overflow:hidden; }
+  .eyebrow { font-family:"DejaVu Sans Mono",monospace; color:var(--orange); font-size:19px; letter-spacing:1.4px; text-transform:uppercase; }
+  h1 { font-weight:400; font-size:72px; line-height:1.0; letter-spacing:-2.6px; margin:15px 0 11px; }
+  h1 strong { font-weight:400; color:var(--orange); }
+  .sub { color:var(--muted); font-size:27px; line-height:1.3; max-width:900px; margin:0 0 22px; }
+
+  .stage { display:grid; grid-template-columns:1fr 1fr; gap:26px; align-items:stretch; min-height:540px; }
+
+  /* Prompt bar (hero) */
+  .prompt { background:var(--white); border:2px solid var(--line); border-radius:24px; padding:22px 22px 20px; display:flex; flex-direction:column; }
+  .prompt .cap { font-family:"DejaVu Sans Mono",monospace; font-size:16px; letter-spacing:.6px; color:var(--muted); text-transform:uppercase; display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
+  .prompt .cap b { color:var(--ink); font-weight:400; }
+  .block { border-radius:16px; padding:18px 18px 16px; }
+  .block .pill { display:inline-block; border-radius:999px; padding:7px 13px 6px; font-family:"DejaVu Sans Mono",monospace; font-size:15px; letter-spacing:.4px; }
+  .block .items { margin:12px 0 0; font-size:21px; line-height:1.42; }
+  .block .items span { color:var(--muted); }
+  .stable { background:var(--green-bg); border:2px solid var(--green-line); flex:1 1 auto; display:flex; flex-direction:column; }
+  .stable .pill { background:#cdeadd; color:var(--green); align-self:flex-start; }
+  .stable .price { margin-top:14px; font-size:23px; color:var(--green); line-height:1.15; }
+  .stable .price b { font-weight:400; font-size:34px; letter-spacing:-.5px; }
+  .stable .minnote { margin-top:auto; padding-top:16px; font-family:"DejaVu Sans Mono",monospace; font-size:15.5px; line-height:1.4; color:#4f7d6e; }
+  .boundary { display:flex; align-items:center; gap:12px; margin:13px 2px; }
+  .boundary .dash { flex:1; border-top:3px dashed #b5ada2; }
+  .boundary .lbl { font-family:"DejaVu Sans Mono",monospace; font-size:14.5px; letter-spacing:.4px; color:#8a8177; text-transform:uppercase; white-space:nowrap; }
+  .variable { background:var(--warm-bg); border:2px solid var(--warm-line); }
+  .variable .pill { background:#f6d8cb; color:var(--warm-ink); }
+  .variable .price { margin-top:12px; font-size:22px; color:var(--warm-ink); line-height:1.15; }
+
+  /* Right rail: hit / miss consequence cards */
+  .rail { display:flex; flex-direction:column; gap:26px; }
+  .conseq { border:2px solid var(--line); border-radius:24px; padding:24px 24px 22px; background:var(--white); flex:1; }
+  .conseq .tag { display:inline-block; border-radius:999px; padding:8px 14px 7px; font-family:"DejaVu Sans Mono",monospace; font-size:16px; letter-spacing:.4px; }
+  .conseq h3 { font-weight:400; font-size:35px; letter-spacing:-.9px; line-height:1.05; margin:16px 0 10px; }
+  .conseq p { font-size:23px; line-height:1.32; color:#5d5752; margin:0; }
+  .conseq p b { color:var(--ink); font-weight:400; }
+  .conseq .note { margin-top:16px; padding-top:15px; border-top:1.5px solid #ece5db; font-family:"DejaVu Sans Mono",monospace; font-size:16px; line-height:1.4; color:#8a8177; }
+  .conseq .note b { color:var(--ink); font-weight:400; }
+  .hit { border-color:#b9ddcc; box-shadow:0 8px 0 rgba(33,107,89,.10); }
+  .hit .tag { background:#cdeadd; color:var(--green); }
+  .hit h3 { color:var(--green); }
+  .miss { border-color:var(--warm-line); }
+  .miss .tag { background:#f6d8cb; color:var(--warm-ink); }
+  .miss h3 { color:var(--warm-ink); }
+
+  .annotation { margin:22px 0 18px; background:var(--dark); color:#fffaf2; border-radius:22px; padding:23px 30px 22px; }
+  .annotation .small { font-family:"DejaVu Sans Mono",monospace; color:var(--yellow); text-transform:uppercase; letter-spacing:1px; font-size:16px; }
+  .annotation p { font-size:30px; line-height:1.16; letter-spacing:-.6px; margin:10px 0 0; }
+  .annotation strong { font-weight:400; color:var(--yellow); }
+
+  .caveat { border-left:5px solid var(--orange); padding:6px 0 6px 18px; color:#5d5752; font-size:20px; line-height:1.34; }
+
+  footer { position:absolute; left:70px; right:70px; bottom:44px; border-top:2px solid var(--line); padding-top:18px; display:flex; justify-content:space-between; align-items:flex-start; font-family:"DejaVu Sans Mono",monospace; font-size:15px; line-height:1.45; color:#625c56; }
+  footer .source { max-width:720px; }
+  footer .handle { color:var(--ink); white-space:nowrap; }
+  .dots { position:absolute; top:33px; right:48px; opacity:.27; }
+  .dots i { display:inline-block; width:7px; height:7px; border-radius:50%; background:var(--orange); margin:4px; }
+</style>
+</head>
+<body>
+<main class="poster">
+  <div class="dots"><i></i><i></i><i></i><i></i><i></i><i></i><br><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="eyebrow">Inside of the Day #6 — Prompt caching</div>
+  <h1>Put the <strong>stable part</strong> first.</h1>
+  <p class="sub">Every call resends the same instructions, tools, and docs. Order the prompt so that stable block is cached — and repeats get cheaper and faster.</p>
+
+  <section class="stage" aria-label="Prompt ordering and cache boundary">
+    <!-- Hero: the prompt, top-to-bottom = send order -->
+    <div class="prompt">
+      <div class="cap"><span>Your prompt</span><b>top = sent first ↓</b></div>
+
+      <div class="block stable">
+        <span class="pill">STABLE PREFIX · CACHED</span>
+        <div class="items">System instructions · tools<br>Few-shot examples · project docs</div>
+        <div class="price"><b>≈ 0.1×</b> input on repeats<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(about a tenth)</div>
+        <div class="minnote">cacheable once the prefix is long enough<br>(≥ 1,024 tokens on Opus 4.8 / Sonnet 5)</div>
+      </div>
+
+      <div class="boundary"><div class="dash"></div><div class="lbl">exact-prefix boundary</div><div class="dash"></div></div>
+
+      <div class="block variable">
+        <span class="pill">VARIABLE TAIL · FULL PRICE</span>
+        <div class="items">User request · retrieved chunks<br>Timestamps — <span>put these last</span></div>
+      </div>
+    </div>
+
+    <!-- Consequence rail -->
+    <div class="rail">
+      <div class="conseq hit">
+        <span class="tag">PREFIX UNCHANGED</span>
+        <h3>Cache hit</h3>
+        <p><b>Repeat input ≈ 0.1× price</b> and a faster first token. The long prefix is served from cache.</p>
+        <div class="note">e.g. Claude Opus 4.8 input<br><b>$5 → $0.50 / M tokens</b> on a cache read</div>
+      </div>
+      <div class="conseq miss">
+        <span class="tag">PREFIX CHANGED</span>
+        <h3>Cache miss</h3>
+        <p><b>Full price again</b> — on the whole prefix. One edited byte up top breaks the match.</p>
+        <div class="note">edited system prompt · reordered tools<br>a new example · a changed doc → miss</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="annotation">
+    <div class="small">The mechanism</div>
+    <p>Both providers cache on an <strong>exact prefix match</strong>.<br>Stable context first, changing content last — the prefix pays back on every repeat.</p>
+  </section>
+
+  <p class="caveat">This is a harness decision, not a smarter model. Cache reads still cost about 10% of input — not zero. Minimum prefix size, write cost, and cache lifetime vary by model; check current pricing.</p>
+
+  <footer>
+    <div class="source">Sources: Anthropic, “Prompt caching” — platform.claude.com/docs<br>OpenAI, “Prompt caching” — developers.openai.com/api/docs · verified 2026-07-21</div>
+    <div class="handle">@vitalylobachev</div>
+  </footer>
+</main>
+</body>
+</html>

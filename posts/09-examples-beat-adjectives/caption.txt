@@ -1,0 +1,18 @@
+INSIDE OF THE DAY #9
+Examples beat adjectives: I stopped describing the style I wanted, and started showing it.
+
+I used to specify style with adjectives. "Professional, concise, structured." Then I'd read the output, find it wasn't what I meant, add more adjectives, and go around again. The problem is that "professional" is a word each of us fills in differently - so I was handing the model a blank to fill, then being surprised it filled it differently than I would.
+
+The one change: I stopped describing the style and started showing it.
+
+Now I put three to five concrete examples of the thing I want right next to the task and say "make the next one like these." The target is visible instead of abstract, so the output lands closer and stays consistent across runs. Anthropic puts it plainly - examples are "one of the most reliable ways to steer Claude's output format, tone, and structure," and it recommends you "include 3-5 examples for best results." OpenAI describes the same move as few-shot learning: steering the model "by including a handful of input/output examples in the prompt."
+
+One caveat worth stating out loud: the examples have to be relevant and varied. Three near-identical examples teach a narrow, wrong pattern, and off-target examples teach an off-target style - Anthropic's own advice is to vary them "so Claude doesn't pick up unintended patterns." And for a true one-off, assembling examples isn't worth it; this pays back on the outputs you produce again and again.
+
+Show the pattern. Don't describe the pattern.
+
+Sources (verified 2026-07-21):
+- Anthropic, "Prompting best practices" (use examples): https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/multishot-prompting
+- OpenAI, "Prompt engineering" (few-shot learning): https://developers.openai.com/api/docs/guides/prompt-engineering
+
+#InsideOfTheDay #AI #PromptEngineering #ChatGPT #Claude
