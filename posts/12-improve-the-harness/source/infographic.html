@@ -1,243 +1,157 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Infographic</title>
+<title>INSIDE OF THE DAY — /improve</title>
 <style>
   :root{
     --parchment:#f4ecdd;
-    --parchment-2:#ece0c9;
-    --ink:#2b2b28;
-    --ink-soft:#5a564d;
-    --orange:#e0592b;
-    --orange-deep:#c8471f;
-    --green:#5c8a5a;
+    --parchment-2:#efe4cf;
+    --ink:#2b2b2e;
+    --ink-soft:#4a4a50;
+    --terra:#c8552b;
+    --terra-soft:#e07a4a;
+    --green:#5b7a52;
+    --line:#d8cbb0;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
-  html,body{background:#d9cfba;}
-  .frame{
-    width:1080px;
-    height:1350px;
-    margin:0 auto;
+  html,body{background:#ddd;}
+  .canvas{
+    width:1080px;height:1350px;
     background:var(--parchment);
     color:var(--ink);
     font-family:Arial,"FreeSans","Liberation Sans",sans-serif;
-    padding:82px 84px 66px;
-    display:flex;
-    flex-direction:column;
-    position:relative;
+    margin:0 auto;position:relative;
+    padding:70px 80px 60px 80px;
+    display:flex;flex-direction:column;
   }
 
-  /* 1. Eyebrow */
+  /* eyebrow */
   .eyebrow{
-    font-size:25px;
-    font-weight:700;
-    letter-spacing:.16em;
-    text-transform:uppercase;
-    color:var(--ink-soft);
+    font-size:20px;font-weight:700;letter-spacing:4px;
+    color:var(--terra);text-transform:uppercase;
+    display:flex;align-items:center;gap:14px;
   }
+  .eyebrow::before{content:"";width:44px;height:4px;background:var(--terra);display:inline-block;}
 
-  /* 2. Headline */
+  /* headline */
   .headline{
-    margin-top:34px;
-    font-size:118px;
-    line-height:0.98;
-    font-weight:800;
-    letter-spacing:-0.03em;
+    margin-top:26px;
+    font-size:70px;line-height:1.04;font-weight:800;
+    letter-spacing:-1px;color:var(--ink);
   }
-  .headline .slash{
-    color:var(--orange);
-    position:relative;
-    white-space:nowrap;
-  }
-  .headline .slash::after{
-    content:"";
-    position:absolute;
-    left:-4px;right:-4px;bottom:6px;
-    height:16px;
-    background:rgba(224,89,43,0.18);
-    z-index:-1;
+  .headline .hl{color:var(--terra);}
+
+  /* deck */
+  .deck{
+    margin-top:26px;
+    font-size:27px;line-height:1.4;font-weight:400;
+    color:var(--ink-soft);max-width:900px;
   }
 
-  /* 3. Badge */
-  .badge{
+  /* mechanism panel */
+  .panel{
     margin-top:40px;
-    align-self:flex-start;
-    background:var(--orange);
-    color:#fff;
-    font-size:44px;
-    font-weight:800;
-    letter-spacing:0.04em;
-    padding:26px 42px;
-    border-radius:14px;
-    box-shadow:10px 10px 0 var(--orange-deep);
-  }
-
-  /* 4. Flow */
-  .flow{
-    margin-top:78px;
-    display:flex;
-    align-items:stretch;
-    gap:0;
-  }
-  .step{
-    flex:1;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    text-align:center;
-  }
-  .chip{
-    width:100%;
     background:var(--parchment-2);
     border:3px solid var(--ink);
-    border-radius:16px;
-    padding:26px 12px 22px;
-    min-height:172px;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
+    border-radius:22px;
+    padding:40px 46px 44px 46px;
+    position:relative;
   }
-  .chip.messy{
-    border-style:dashed;
-    color:var(--ink-soft);
+  .panel-head{
+    font-size:40px;font-weight:800;color:var(--ink);
+    display:flex;align-items:center;gap:20px;letter-spacing:-.5px;
   }
-  .chip.center{
-    background:var(--orange);
-    border-color:var(--orange-deep);
-    color:#fff;
-    box-shadow:8px 8px 0 var(--orange-deep);
+  .cmd{
+    background:var(--terra);color:#fff;
+    font-family:"Courier New",monospace;font-weight:700;
+    padding:6px 16px;border-radius:10px;font-size:34px;white-space:nowrap;
   }
-  .chip.good{
-    background:#e5efe0;
-    border-color:var(--green);
-    color:var(--green);
+  .steps{margin-top:34px;display:flex;flex-direction:column;gap:26px;}
+  .step{display:flex;align-items:flex-start;gap:24px;}
+  .num{
+    flex:none;width:64px;height:64px;border-radius:50%;
+    background:var(--terra);color:#fff;
+    font-size:30px;font-weight:800;
+    display:flex;align-items:center;justify-content:center;
   }
-  .chip .label{
-    font-size:30px;
-    font-weight:800;
-    line-height:1.05;
-    letter-spacing:-0.01em;
-  }
-  .chip .sub{
-    margin-top:14px;
-    font-size:21px;
-    font-weight:600;
-    line-height:1.15;
-    opacity:.9;
-  }
-  .arrow{
-    width:64px;
-    flex:0 0 64px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    align-self:center;
-    color:var(--ink);
-  }
+  .step-txt{font-size:29px;line-height:1.3;font-weight:600;color:var(--ink);padding-top:6px;}
 
-  /* 5 + 6. Proof + takeaway */
+  /* CTA */
+  .cta{
+    margin-top:40px;
+    background:var(--ink);color:var(--parchment);
+    border-radius:18px;padding:30px 40px;
+    font-size:36px;font-weight:800;letter-spacing:-.5px;
+    display:flex;align-items:center;gap:22px;
+  }
+  .cta .arrow{color:var(--terra-soft);font-size:44px;line-height:1;}
+
+  /* proof */
   .proof{
-    margin-top:82px;
-    font-size:38px;
-    font-weight:800;
-    color:var(--green);
-    display:flex;
-    align-items:center;
-    gap:18px;
+    margin-top:22px;
+    font-size:23px;font-weight:700;color:var(--green);
+    display:flex;align-items:center;gap:12px;
   }
-  .proof .dot{
-    width:20px;height:20px;border-radius:50%;
-    background:var(--green);
-    flex:0 0 20px;
-  }
-  .takeaway{
-    margin-top:26px;
-    font-size:48px;
-    font-weight:800;
-    line-height:1.12;
-    letter-spacing:-0.02em;
-    max-width:14ch;
-  }
-  .takeaway .keep{color:var(--orange);}
+  .proof .dot{width:16px;height:16px;border-radius:50%;background:var(--green);display:inline-block;}
 
-  /* Footer */
-  .footer{
+  /* takeaway */
+  .takeaway{
     margin-top:auto;
-    padding-top:40px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    font-family:"Courier New",monospace;
-    font-size:22px;
-    color:var(--ink-soft);
-    border-top:2px solid rgba(43,43,40,0.18);
+    border-top:3px solid var(--line);
+    padding-top:26px;
+    font-size:34px;line-height:1.3;font-weight:800;color:var(--ink);
   }
-  .footer .handle{color:var(--orange);font-weight:700;}
+  .takeaway .gm{color:var(--green);}
+
+  /* footer */
+  .footer{
+    margin-top:24px;
+    display:flex;justify-content:space-between;align-items:center;
+    font-family:"Courier New",monospace;
+    font-size:21px;color:var(--ink-soft);font-weight:700;
+  }
 </style>
 </head>
 <body>
-  <div class="frame">
-
+  <div class="canvas">
     <div class="eyebrow">INSIDE OF THE DAY · AGENT OPERATIONS</div>
 
-    <h1 class="headline">
-      One prompt.<br>
-      <span class="slash">/improve</span> is ready.
-    </h1>
+    <h1 class="headline">Не спешите <span class="hl">зарывать</span> длинную много часовую сессию!</h1>
 
-    <div class="badge">FULL PROMPT IN THE POST</div>
+    <p class="deck">В длинной сессии уже есть дорогой опыт: поиск, ошибки, противоречия и исправления.</p>
 
-    <div class="flow">
-      <div class="step">
-        <div class="chip messy">
-          <div class="label">LONG<br>SESSION</div>
-          <div class="sub">searches · mistakes · fixes</div>
+    <div class="panel">
+      <div class="panel-head">В конце сессии запустите <span class="cmd">/improve</span></div>
+      <div class="steps">
+        <div class="step">
+          <div class="num">01</div>
+          <div class="step-txt">Находит повторяющиеся паттерны и ошибки</div>
         </div>
-      </div>
-
-      <div class="arrow" aria-hidden="true">
-        <svg width="44" height="34" viewBox="0 0 44 34" fill="none">
-          <path d="M2 17h34" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
-          <path d="M27 5l14 12-14 12" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
-
-      <div class="step">
-        <div class="chip center">
-          <div class="label">ONE<br>PROMPT</div>
-          <div class="sub">install /improve once</div>
+        <div class="step">
+          <div class="num">02</div>
+          <div class="step-txt">Превращает длинные команды в скрипты</div>
         </div>
-      </div>
-
-      <div class="arrow" aria-hidden="true">
-        <svg width="44" height="34" viewBox="0 0 44 34" fill="none">
-          <path d="M2 17h34" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
-          <path d="M27 5l14 12-14 12" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
-
-      <div class="step">
-        <div class="chip good">
-          <div class="label">BETTER NEXT<br>SESSION</div>
-          <div class="sub">rules · scripts · skills</div>
+        <div class="step">
+          <div class="num">03</div>
+          <div class="step-txt">Сохраняет уроки в правила, память и skills</div>
         </div>
       </div>
     </div>
 
-    <div class="proof"><span class="dot"></span>Tested in Claude Code.</div>
-
-    <div class="takeaway">
-      Do not bury the learning.<br>
-      <span class="keep">Keep the upgrade.</span>
+    <div class="cta">
+      <span class="arrow">&#9656;</span>
+      <span>Полный универсальный промпт — в тексте поста</span>
     </div>
+
+    <div class="proof"><span class="dot"></span>Проверено в Claude Code.</div>
+
+    <div class="takeaway">Не храните всю переписку. <span class="gm">Сохраните улучшение системы.</span></div>
 
     <div class="footer">
-      <span class="source">Claude Code · /improve</span>
-      <span class="handle">@vitalylobachev</span>
+      <span>github.com/mcplafed/inside-of-the-day</span>
+      <span>@vitalylobachev</span>
     </div>
-
   </div>
 </body>
 </html>
