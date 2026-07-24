@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Give the model the file — not your memory of the file</title>
+<style>
+  :root {
+    --ink:#24211f; --muted:#746e68; --paper:#f7f1e8; --white:#fffdf9;
+    --line:#d9d1c7; --orange:#dd6b3d; --yellow:#f2c84b; --dark:#282522;
+    --green:#216b59; --green-bg:#e2f1e9; --green-line:#b9ddcc;
+    --warm-bg:#fbefea; --warm-line:#edd2c7; --warm-ink:#a3573a;
+  }
+  * { box-sizing:border-box; }
+  html,body { margin:0; width:1080px; height:1350px; background:var(--paper); }
+  body { font-family: FreeSans, Arial, sans-serif; color:var(--ink); }
+  .poster { position:relative; width:1080px; height:1350px; padding:56px 70px 52px; overflow:hidden; }
+  .eyebrow { font-family:"DejaVu Sans Mono",monospace; color:var(--orange); font-size:19px; letter-spacing:1.4px; text-transform:uppercase; }
+  h1 { font-weight:400; font-size:64px; line-height:1.02; letter-spacing:-2.3px; margin:15px 0 11px; }
+  h1 strong { font-weight:400; color:var(--orange); }
+  .sub { color:var(--muted); font-size:27px; line-height:1.3; max-width:930px; margin:0 0 22px; }
+
+  .stage { display:grid; grid-template-columns:1fr 1fr; gap:26px; align-items:stretch; min-height:552px; }
+  .panel { border:2px solid var(--line); border-radius:24px; padding:22px 22px 20px; background:var(--white); display:flex; flex-direction:column; }
+  .panel .cap { font-family:"DejaVu Sans Mono",monospace; font-size:16px; letter-spacing:.6px; text-transform:uppercase; display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; }
+  .panel .cap b { font-weight:400; }
+  .arrow { text-align:center; font-family:"DejaVu Sans Mono",monospace; font-size:14px; letter-spacing:.4px; text-transform:uppercase; margin:14px 0 13px; }
+
+  .docline { height:13px; border-radius:6px; }
+
+  /* LEFT — my memory of it (a fragment) */
+  .miss { background:var(--warm-bg); border-color:var(--warm-line); }
+  .miss .cap, .miss .arrow { color:var(--warm-ink); }
+  .scrap { background:var(--white); border:2px solid var(--warm-line); border-top:3px dashed #e6a988;
+           padding:15px 16px 26px; position:relative;
+           clip-path:polygon(0 0,100% 0,100% 100%,94% 96%,88% 100%,82% 96%,76% 100%,70% 96%,64% 100%,58% 96%,52% 100%,46% 96%,40% 100%,34% 96%,28% 100%,22% 96%,16% 100%,10% 96%,4% 100%,0 96%); }
+  .scrap .tab { font-family:"DejaVu Sans Mono",monospace; font-size:14px; letter-spacing:.4px; color:var(--warm-ink); text-transform:uppercase; margin-bottom:12px; }
+  .scrap .docline { background:#e7c3b1; margin-bottom:10px; }
+  .scrap .gap { font-family:"DejaVu Sans Mono",monospace; font-size:16px; color:#c07a52; font-style:italic; margin:4px 0 2px; }
+  .out { border-radius:16px; padding:16px 17px 15px; margin-top:auto; }
+  .out .lbl { font-family:"DejaVu Sans Mono",monospace; font-size:14px; letter-spacing:.4px; text-transform:uppercase; margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+  .out .badge { border-radius:999px; padding:3px 9px 2px; font-size:13px; }
+  .out .bars { display:flex; flex-direction:column; gap:9px; }
+  .out .bars span { height:15px; border-radius:6px; }
+  .out .note { margin-top:12px; font-size:16.5px; line-height:1.28; }
+  .out-miss { background:var(--white); border:2px solid var(--warm-line); }
+  .out-miss .lbl, .out-miss .note { color:var(--warm-ink); }
+  .out-miss .badge { background:#f6d8cb; color:var(--warm-ink); }
+  .out-miss .bars span { background:#ecccbe; }
+  .out-miss .bars span:nth-child(1){ width:94%; } .out-miss .bars span:nth-child(2){ width:70%; } .out-miss .bars span:nth-child(3){ width:85%; }
+
+  /* RIGHT — the actual source */
+  .match { background:var(--green-bg); border-color:var(--green-line); }
+  .match .cap, .match .arrow { color:var(--green); }
+  .doc { background:var(--white); border:2px solid var(--green-line); border-radius:14px; padding:15px 16px 15px; }
+  .doc .tab { font-family:"DejaVu Sans Mono",monospace; font-size:14px; letter-spacing:.4px; color:var(--green); text-transform:uppercase; margin-bottom:12px; }
+  .doc .docline { background:#cfe6da; margin-bottom:10px; }
+  .doc .quote { background:#fbe6b6; border-left:5px solid var(--yellow); border-radius:5px; padding:9px 12px; margin:12px 0 11px; }
+  .doc .quote .qlbl { font-family:"DejaVu Sans Mono",monospace; font-size:13.5px; letter-spacing:.3px; color:#8a6a15; text-transform:uppercase; margin-bottom:7px; }
+  .doc .quote .docline { background:#e6c34e; margin-bottom:8px; }
+  .doc .quote .docline:last-child { margin-bottom:0; width:62%; }
+  .out-match { background:var(--white); border:2px solid var(--green-line); box-shadow:0 6px 0 rgba(33,107,89,.10); }
+  .out-match .lbl, .out-match .note { color:#33544b; }
+  .out-match .badge { background:#cdeadd; color:var(--green); }
+  .out-match .bars span { background:#8fcbb2; }
+  .out-match .bars span:nth-child(1){ width:92%; } .out-match .bars span:nth-child(2){ width:90%; } .out-match .bars span:nth-child(3){ width:91%; }
+
+  .annotation { margin:22px 0 18px; background:var(--dark); color:#fffaf2; border-radius:22px; padding:22px 30px 21px; display:flex; align-items:center; gap:26px; }
+  .annotation .body { flex:1; }
+  .annotation .small { font-family:"DejaVu Sans Mono",monospace; color:var(--yellow); text-transform:uppercase; letter-spacing:1px; font-size:16px; }
+  .annotation p { font-size:28px; line-height:1.18; letter-spacing:-.5px; margin:9px 0 0; }
+  .annotation strong { font-weight:400; color:var(--yellow); }
+  .annotation .measured { flex:none; width:214px; border-left:2px solid #4a453f; padding-left:24px; font-family:"DejaVu Sans Mono",monospace; }
+  .annotation .measured .m { color:#f0e6d2; font-size:15px; line-height:1.4; }
+  .annotation .measured .big { color:var(--yellow); font-size:34px; letter-spacing:-.5px; margin-bottom:5px; }
+
+  .caveat { border-left:5px solid var(--orange); padding:6px 0 6px 18px; color:#5d5752; font-size:20px; line-height:1.34; }
+
+  footer { position:absolute; left:70px; right:70px; bottom:44px; border-top:2px solid var(--line); padding-top:18px; display:flex; justify-content:space-between; align-items:flex-start; font-family:"DejaVu Sans Mono",monospace; font-size:15px; line-height:1.45; color:#625c56; }
+  footer .source { max-width:740px; }
+  footer .handle { color:var(--ink); white-space:nowrap; }
+  .dots { position:absolute; top:33px; right:48px; opacity:.27; }
+  .dots i { display:inline-block; width:7px; height:7px; border-radius:50%; background:var(--orange); margin:4px; }
+</style>
+</head>
+<body>
+<main class="poster">
+  <div class="dots"><i></i><i></i><i></i><i></i><i></i><i></i><br><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="eyebrow">Inside of the Day #10 — Give the model the file</div>
+  <h1>I gave the model the <strong>file</strong>, not my <strong>memory</strong> of it.</h1>
+  <p class="sub">A paraphrase is a lossy copy; the real file is the ground truth. Attach the source and ask the model to quote the passage first.</p>
+
+  <section class="stage" aria-label="A remembered fragment vs the actual source">
+    <!-- LEFT: fragment → plausible but wrong -->
+    <div class="panel miss">
+      <div class="cap"><span>My memory of it</span><b>a fragment</b></div>
+      <div class="scrap">
+        <div class="tab">What I remember</div>
+        <div class="docline" style="width:96%"></div>
+        <div class="docline" style="width:78%"></div>
+        <div class="gap">…the rest is a guess…</div>
+      </div>
+      <div class="arrow">↓ the model fills the gaps</div>
+      <div class="out out-miss">
+        <div class="lbl">Answer <span class="badge">✗ unverifiable</span></div>
+        <div class="bars"><span></span><span></span><span></span></div>
+        <div class="note">Plausible, confident — and sometimes invented.</div>
+      </div>
+    </div>
+
+    <!-- RIGHT: full source + quote → grounded -->
+    <div class="panel match">
+      <div class="cap"><span>The actual source</span><b>attached</b></div>
+      <div class="doc">
+        <div class="tab">The whole document</div>
+        <div class="docline" style="width:96%"></div>
+        <div class="docline" style="width:88%"></div>
+        <div class="quote">
+          <div class="qlbl">↳ quote the passage first</div>
+          <div class="docline"></div>
+          <div class="docline"></div>
+        </div>
+        <div class="docline" style="width:82%"></div>
+      </div>
+      <div class="arrow">↓ answer from the quote</div>
+      <div class="out out-match">
+        <div class="lbl">Answer <span class="badge">✓ grounded</span></div>
+        <div class="bars"><span></span><span></span><span></span></div>
+        <div class="note">Anchored to a passage you can see and check.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="annotation">
+    <div class="body">
+      <div class="small">The mechanism</div>
+      <p>Put the source at the top and ask it to <strong>quote the passage first</strong>.<br>The answer is grounded in the real text — not your memory of it.</p>
+    </div>
+    <div class="measured">
+      <div class="big">↑ 30%</div>
+      <div class="m">documents-first placement, quality — up to 30% in tests (illustrative)</div>
+    </div>
+  </section>
+
+  <p class="caveat">Attach only the relevant source — a giant irrelevant archive wastes context and buries the passage that matters. Grounding reduces error; for high-stakes facts, still check.</p>
+
+  <footer>
+    <div class="source">Sources: Anthropic — “Prompting best practices” (long context) · “Reduce hallucinations” · “Citations” · verified 2026-07-21</div>
+    <div class="handle">@vitalylobachev</div>
+  </footer>
+</main>
+</body>
+</html>

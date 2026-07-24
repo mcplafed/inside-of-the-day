@@ -1,0 +1,21 @@
+INSIDE OF THE DAY #8
+A reusable project brief: I stopped re-explaining my project in every chat.
+
+For a long time the first thing I did in a new chat was re-paste the same block: who I am, what the project is, the goals, the constraints, the two or three rules I always want followed. Every conversation started from zero, and two chats I opened the same morning would quietly drift into two different set-ups.
+
+So I moved that stable context out of the message and into the workspace.
+
+Now it lives in one place - a ChatGPT Project or Custom Instructions, a Claude Project, or a CLAUDE.md file for Claude Code. That brief is loaded into the model's context at the start of every conversation in that space, so each new chat already knows my standing rules. Anthropic documents this plainly: CLAUDE.md is "loaded into the context window at the start of every session," and a Claude Project's instructions are used "for all the chats within the project." ChatGPT Projects work the same way - instructions carry across every chat in the project.
+
+The result isn't magic, it's just less friction: I author the context once instead of re-typing it, and every chat starts from the same baseline, so the results are comparable.
+
+One honest caveat. A brief is context, not a contract. Anthropic is explicit that the model "treats them as context, not enforced configuration" - there is "no guarantee of strict compliance." So keep it short and unambiguous; a bloated file gets half-followed, and anything you truly need enforced needs a hard mechanism, not more prose.
+
+Write the standing context once. Start every chat from the same baseline.
+
+Sources (verified 2026-07-21):
+- Anthropic, "How Claude remembers your project": https://code.claude.com/docs/en/memory
+- Anthropic, "How can I create and manage projects?": https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects
+- OpenAI, "Projects in ChatGPT": https://help.openai.com/en/articles/10169521-using-projects-in-chatgpt
+
+#InsideOfTheDay #AI #ChatGPT #Claude #AIProductivity

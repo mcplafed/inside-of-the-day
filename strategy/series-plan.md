@@ -15,7 +15,7 @@ One sharply framed, evidence-backed operating insight per post. Each post must g
 
 ## Rules
 
-- One insight, one mechanism, one memorable takeaway.
+- Every infographic eyebrow uses `Inside of the Day #<number> — <concise insight topic>` so the series is immediately recognizable.
 - Use primary sources for empirical claims. Keep scope caveats short and visible.
 - Do not turn a benchmark result into a universal conclusion about coding agents.
 - Freeze the exact caption and final visual before scheduling publication.

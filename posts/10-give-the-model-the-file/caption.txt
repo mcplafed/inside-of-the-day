@@ -1,0 +1,19 @@
+INSIDE OF THE DAY #10
+Give the model the file: I gave it the file, not my memory of the file.
+
+I used to ask the model about a document from memory. I'd paraphrase it, or paste one fragment, and let the model fill in the gaps. It would answer confidently about the parts I'd left out - and every so often it would invent one, and I'd spend an afternoon chasing an error that started with my own lossy recollection.
+
+The one change: now I hand it the actual source and ask it to quote the relevant passage first, before it answers.
+
+A paraphrase is a lossy copy; the real file is the ground truth. So I attach the document (and for long inputs, put it near the top, above the question) and ask for a word-for-word quote before the answer. Anthropic's own guidance is exactly this: "Place your long documents and inputs near the top of your prompt, above your query," and "ask Claude to quote relevant parts of the documents first before carrying out its task" - which "grounds its responses in the actual text." The quote also makes the answer checkable, which is the whole point.
+
+Two honest caveats. This only helps when the answer is actually in the file - it won't rescue a question the document can't answer. And attach the relevant source, not everything you own: dumping a giant, mostly irrelevant archive for a one-line lookup just wastes context and can bury the passage that matters. Grounding reduces error; for high-stakes facts, still check it yourself.
+
+Give the model the source. Not your memory of the source.
+
+Sources (verified 2026-07-21):
+- Anthropic, "Prompting best practices" (long context): https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices
+- Anthropic, "Reduce hallucinations": https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations
+- Anthropic, "Citations": https://platform.claude.com/docs/en/build-with-claude/citations
+
+#InsideOfTheDay #AI #ChatGPT #Claude #AIProductivity
