@@ -1,22 +1,29 @@
-Don't bury a long agent session.
+Не спешите зарывать длинную много часовую сессию!
 
-The final answer is often the least interesting thing it produced.
+После нескольких часов работы агент уже прошёл через поиск, ошибки, противоречия, неудачные попытки и исправления. Это не мусорный контекст. Это дорогой опыт.
 
-A serious session contains failed searches, conflicting information, bad assumptions, corrections, and fragile commands that became too long to review safely. That is expensive operational learning.
+Проблема в том, что обычно вместе с сессией мы выбрасываем и этот опыт.
 
-I want the session to leave behind more than a transcript. So I give the agent an /improve command.
+Я хочу, чтобы в конце серьёзной работы агент не писал summary ради summary, а улучшал свою рабочую среду. Для этого я дал ему команду /improve.
 
-At the end of substantial work, it reviews what happened and asks:
+В конце сессии она:
 
-- What kept recurring?
-- What went wrong and needed correction?
-- Which commands should become a tested script?
-- Which lesson belongs in memory, a rule, or an existing skill?
+- находит повторяющиеся паттерны и ошибки;
+- превращает длинные и хрупкие команды в проверяемые скрипты;
+- сохраняет только полезные уроки в память, правила и skills.
 
-The important constraint: it does not save everything. Raw logs, temporary task state, secrets, and one-off details should disappear with the session. Only durable, verified lessons stay.
+Не нужно сохранять весь разговор. Логи, временное состояние и секреты должны исчезать вместе с сессией. Оставаться должны только проверенные, повторно используемые улучшения.
 
-The output is a better harness: fewer rediscovered mistakes, safer defaults, and less manual work next time.
+Я проверил этот подход в Claude Code: один универсальный промпт создаёт нативную /improve для среды агента.
 
-A long session should not end as chat history. It should make the next session better.
+Вот сам промпт:
+
+Create a reusable command called /improve for this agent environment.
+
+First inspect how this system supports reusable commands, skills, prompts, or plugins. Use the simplest native mechanism that makes /improve available in future sessions. Do not invent a parallel framework if the environment already has one.
+
+When /improve is invoked at the end of substantial work, review the session for durable lessons, repeated mistakes, failed assumptions, unnecessary retries, and fragile or overly long shell commands. Turn only evidence-based lessons into the correct memory, scoped instructions, helper scripts, or existing skills. Never persist secrets, raw logs, private data, or temporary task state. Validate every change and report what changed, why, where it was saved, and what was deliberately not persisted.
+
+Длинная сессия не должна заканчиваться историей чата. Она должна делать следующую сессию лучше.
 
 #AIAgents #AgentEngineering #SoftwareEngineering #DeveloperExperience

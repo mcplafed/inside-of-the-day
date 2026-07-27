@@ -13,7 +13,8 @@ with sync_playwright() as p:
     page.on("console", lambda msg: errors.append(f"console {msg.type}: {msg.text}") if msg.type == "error" else None)
     page.goto(html.as_uri(), wait_until="networkidle")
     overflow = page.evaluate("""() => {
-      const canvas = document.querySelector('.canvas');
+      const canvas = document.querySelector('.frame, .canvas');
+      if (!canvas) throw new Error('Expected .frame or .canvas root');
       return {
         scrollWidth: canvas.scrollWidth, clientWidth: canvas.clientWidth,
         scrollHeight: canvas.scrollHeight, clientHeight: canvas.clientHeight
@@ -23,7 +24,7 @@ with sync_playwright() as p:
         raise RuntimeError(f"Canvas overflow: {overflow}")
     if errors:
         raise RuntimeError("\n".join(errors))
-    page.locator(".canvas").screenshot(path=str(assets / "infographic.png"))
+    page.locator(".frame, .canvas").screenshot(path=str(assets / "infographic.png"))
     page.screenshot(path=str(assets / "mobile-probe.png"), clip={"x": 0, "y": 0, "width": 1080, "height": 1350}, scale="css")
     browser.close()
 

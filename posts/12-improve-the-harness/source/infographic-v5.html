@@ -10,74 +10,41 @@
     --ink:#23282E;
     --ink-soft:#5A6067;
     --terra:#BF5433;
-    --blue:#5B7A96;
     --line:#DED2C2;
     --slate:#252C33;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   html,body{background:#111;}
 
-  /* One family. Four sizes: 92 / 30 / 27 / 20. Two weights: 500 / 800.
-     Monospace only for the literal /improve and the metadata line. */
+  /* One family. Four sizes: 92 / 30 / 27 / 20. Two weights: 500 / 800. */
   .canvas{
     position:relative;
     width:1080px;height:1350px;
-    /* Two pale soft orbs, no grid. Painted as background layers rather than
-       absolutely positioned elements: a box hanging off the right/bottom edge
-       still counts toward the scrollable overflow region (even under
-       overflow:hidden) and would push scrollWidth/scrollHeight past 1080x1350.
-       Backgrounds never do, so the canvas stays exactly 1080x1350.
-       Centres/radii match the former .orb-a (960,80) and .orb-b (110,1280);
-       the extra stops stand in for the old 60px blur. */
-    background-color:var(--paper);
-    background-image:
-      radial-gradient(circle 470px at 960px 80px,
-        rgba(191,84,51,.20) 0%, rgba(191,84,51,.15) 28%,
-        rgba(191,84,51,.09) 52%, rgba(191,84,51,.03) 72%,
-        rgba(191,84,51,0) 100%),
-      radial-gradient(circle 510px at 110px 1280px,
-        rgba(91,122,150,.18) 0%, rgba(91,122,150,.13) 28%,
-        rgba(91,122,150,.08) 52%, rgba(91,122,150,.03) 72%,
-        rgba(91,122,150,0) 100%);
-    background-repeat:no-repeat;
+    background:var(--paper);
     font-family:Arial,FreeSans,Helvetica,sans-serif;
     font-weight:500;
     color:var(--ink);
     overflow:hidden;
-    padding:40px 64px 40px;
-    display:flex;flex-direction:column;
-  }
-
-  /* --- the single metadata treatment (level 4) --- */
-  .meta{
-    font-family:"SF Mono",Menlo,Consolas,monospace;
-    font-size:20px;line-height:1.3;font-weight:500;
-    text-transform:uppercase;letter-spacing:.14em;color:var(--ink-soft);
-  }
-
-  .series{display:flex;align-items:center;gap:14px;}
-  .series .dot{
-    width:14px;height:14px;flex:0 0 14px;border-radius:50%;background:var(--terra);
+    padding:44px 64px 0;
   }
 
   /* --- headline (level 1) --- */
   h1{
-    margin-top:30px;
     font-size:92px;line-height:1.0;font-weight:800;letter-spacing:-.02em;
   }
-  h1 em{font-style:normal;color:var(--terra);}
+  h1 em{font-style:normal;color:var(--terra);}   /* terracotta 1 of 4 */
 
   .lead{
-    margin-top:28px;
+    margin-top:32px;
     font-size:30px;line-height:1.34;font-weight:500;color:var(--ink-soft);
   }
   .lead code{font-family:"SF Mono",Menlo,Consolas,monospace;color:var(--ink);}
 
   /* --- the spine (level 2) --- */
-  .flow{margin-top:34px;}
+  .flow{margin-top:40px;}
   .stage{
     display:flex;align-items:center;gap:24px;
-    min-height:164px;padding:24px 30px;
+    min-height:170px;padding:26px 30px;
     border-radius:20px;
   }
   .stage .name{
@@ -93,12 +60,8 @@
   .s1 .body,.s3 .body{color:var(--ink-soft);}
 
   .s2{background:var(--slate);color:var(--paper-2);}
-  .s2 .name{
-    display:flex;align-items:center;gap:16px;
-    font-family:"SF Mono",Menlo,Consolas,monospace;
-  }
-  .s2 .name span{color:var(--terra);}
-  .s2 .name svg{display:block;flex:0 0 34px;}
+  .s2 .name{font-family:"SF Mono",Menlo,Consolas,monospace;}
+  .s2 .name span{color:var(--terra);}            /* terracotta 2 of 4 */
   .s2 .body{color:#D8D2C9;}
 
   .s3 .out{flex:1;display:flex;flex-direction:column;gap:10px;}
@@ -106,35 +69,35 @@
     display:flex;align-items:center;gap:14px;
     font-size:27px;line-height:1.3;font-weight:500;color:var(--ink-soft);
   }
-  .s3 .bar{
+  .s3 .bar{                                       /* terracotta 3 of 4 */
     width:16px;height:16px;flex:0 0 16px;border-radius:4px;background:var(--terra);
   }
 
   /* bare arrows, no labels */
-  .arrow{height:52px;display:flex;align-items:center;justify-content:center;}
+  .arrow{height:56px;display:flex;align-items:center;justify-content:center;}
   .arrow svg{display:block;}
 
   /* --- bottom zone --- */
-  .foot{margin-top:auto;padding-top:30px;}
+  .foot{position:absolute;left:64px;right:64px;bottom:44px;}
+  .micro{
+    font-size:20px;line-height:1.3;font-weight:500;
+    text-transform:uppercase;letter-spacing:.14em;color:var(--ink-soft);
+  }
   .cta{
-    border-top:3px solid var(--ink);padding-top:20px;
+    margin-top:20px;
+    border-top:3px solid var(--ink);padding-top:22px;
     font-size:30px;line-height:1.3;font-weight:800;
   }
-  .cta em{font-style:normal;color:var(--terra);}
-  .takeaway{margin-top:14px;}
+  .cta em{font-style:normal;color:var(--terra);}  /* terracotta 4 of 4 */
   .credits{
-    margin-top:20px;padding-top:16px;
+    margin-top:18px;padding-top:14px;
     border-top:1px solid var(--line);
-    display:flex;align-items:baseline;justify-content:space-between;gap:24px;
+    font-size:20px;line-height:1.3;font-weight:500;color:var(--ink-soft);
   }
 </style>
 </head>
 <body>
 <div class="canvas">
-
-  <div class="series meta">
-    <span class="dot"></span>Inside of the day · Agent operations
-  </div>
 
   <h1>Don't bury a long<br><em>agent session.</em></h1>
 
@@ -162,13 +125,7 @@
     </div>
 
     <div class="stage s2">
-      <div class="name">
-        <svg width="34" height="34" viewBox="0 0 34 34" fill="none" aria-hidden="true">
-          <path d="M4 6h26L21 18v10l-8-5V18L4 6z" stroke="#BF5433" stroke-width="3"
-                stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <span>/</span>improve
-      </div>
+      <div class="name"><span>/</span>improve</div>
       <div class="body">
         Reads the session back, extracts the patterns that recur, and keeps only
         what stays true tomorrow.
@@ -195,11 +152,10 @@
   </div>
 
   <div class="foot">
+    <div class="micro">Never retained: secrets · raw logs · temporary state</div>
     <div class="cta">Full prompt <em>in the post</em></div>
-    <div class="takeaway meta">Never retained: secrets · raw logs · temporary state</div>
-    <div class="credits meta">
-      <span>github.com/mcplafed/inside-of-the-day</span>
-      <span>@vitalylobachev</span>
+    <div class="credits">
+      @vitalylobachev · Tested in Claude Code · Works in any agent workflow
     </div>
   </div>
 
