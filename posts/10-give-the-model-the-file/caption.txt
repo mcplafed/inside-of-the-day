@@ -1,4 +1,4 @@
-INSIDE OF THE DAY #10
+INSIDE OF THE DAY
 Give the model the file: I gave it the file, not my memory of the file.
 
 I used to ask the model about a document from memory. I'd paraphrase it, or paste one fragment, and let the model fill in the gaps. It would answer confidently about the parts I'd left out - and every so often it would invent one, and I'd spend an afternoon chasing an error that started with my own lossy recollection.

@@ -1,4 +1,4 @@
-INSIDE OF THE DAY #9
+INSIDE OF THE DAY
 Examples beat adjectives: I stopped describing the style I wanted, and started showing it.
 
 I used to specify style with adjectives. "Professional, concise, structured." Then I'd read the output, find it wasn't what I meant, add more adjectives, and go around again. The problem is that "professional" is a word each of us fills in differently - so I was handing the model a blank to fill, then being surprised it filled it differently than I would.
