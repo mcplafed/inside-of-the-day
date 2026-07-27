@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Your platform has two users now: people and agents.</title>
+<style>
+:root{
+  --paper:#f5efe4;--ink:#26302f;--muted:#6a736e;--line:#d8cfc0;
+  --terra:#bd5a3c;--terraDark:#8f3e29;--terraBg:#f4e2d9;
+  --blue:#37627e;--blueBg:#e3ecf2;
+  --green:#3a7466;--greenBg:#e0ece5;
+  --white:#fffdf9;
+}
+*{box-sizing:border-box}
+html,body{margin:0;width:1080px;height:1350px;background:var(--paper)}
+body{color:var(--ink);font-family:Arial,Helvetica,sans-serif;-webkit-font-smoothing:antialiased}
+.canvas{width:1080px;height:1350px;padding:52px 60px 40px;display:flex;flex-direction:column;overflow:hidden}
+
+/* header */
+.eyebrow{font:700 20px/1.2 "Courier New",monospace;letter-spacing:1.5px;color:var(--terraDark);text-transform:uppercase}
+h1{font-family:Arial,Helvetica,sans-serif;font-weight:800;margin:12px 0 8px;font-size:50px;line-height:.98;letter-spacing:-1.8px}
+h1 em{font-style:normal;color:var(--terraDark)}
+.sub{font-size:22px;line-height:1.24;color:var(--muted);max-width:940px;margin:0}
+.sub b{color:var(--ink);font-weight:700}
+
+/* top flow */
+.flow{margin:22px 0 8px;display:grid;grid-template-columns:270px 44px 1fr;align-items:center;gap:0}
+.doors{display:flex;flex-direction:column;gap:14px}
+.door{border:2px solid var(--ink);border-radius:12px;background:var(--white);padding:12px 16px}
+.door .who{font:800 25px/1 Arial,Helvetica,sans-serif;letter-spacing:-.5px}
+.door .paths{margin-top:4px;font:700 15px/1.1 "Courier New",monospace;letter-spacing:.2px;color:var(--muted)}
+.door.person{border-left:8px solid var(--blue)}
+.door.person .who{color:var(--blue)}
+.door.agent{border-left:8px solid var(--green)}
+.door.agent .who{color:var(--green)}
+.bracket{height:150px;display:block}
+.merge{display:flex;flex-direction:column;gap:8px}
+.mergerow{display:grid;grid-template-columns:1fr 40px 300px;align-items:center;gap:0}
+.contract{border:2px solid var(--terraDark);border-radius:12px;background:var(--terraBg);padding:14px 18px;text-align:center}
+.contract .t{font:800 26px/1 Arial,Helvetica,sans-serif;letter-spacing:-.6px;color:var(--terraDark)}
+.contract .s{margin-top:5px;font:700 15px/1.15 "Courier New",monospace;letter-spacing:.3px;color:var(--terra)}
+.arrowbig{text-align:center;color:var(--terra);font-size:34px;font-weight:700;line-height:1}
+.plane{border:2px solid var(--ink);border-radius:12px;background:var(--ink);padding:14px 18px;text-align:center}
+.plane .t{font:800 26px/1 Arial,Helvetica,sans-serif;letter-spacing:-.6px;color:#fff}
+.plane .s{margin-top:5px;font:700 14px/1.15 "Courier New",monospace;letter-spacing:.3px;color:#cfd6cf}
+
+/* five-layer table */
+.blueprint{margin-top:14px;border:2px solid var(--ink);border-radius:14px;background:var(--white);overflow:hidden}
+.grid{display:grid;grid-template-columns:238px 1fr 1fr 234px}
+.grid > div{padding:13px 16px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;justify-content:center}
+.hdr > div{font:700 14px/1.1 "Courier New",monospace;letter-spacing:.5px;text-transform:uppercase;padding-top:12px;padding-bottom:12px;background:#efe7d8}
+.hdr .human{color:var(--blue)}
+.hdr .agent{color:var(--green)}
+.hdr .shared{color:var(--terraDark)}
+.hdr .lay{color:var(--muted)}
+.cell-human{background:var(--blueBg)}
+.cell-agent{background:var(--greenBg)}
+.row-last > div{border-bottom:none}
+
+.lay{gap:3px}
+.lay .num{font:700 13px/1 "Courier New",monospace;color:var(--muted);letter-spacing:1px}
+.lay .name{font:800 25px/.98 Arial,Helvetica,sans-serif;letter-spacing:-.6px}
+.lay .ben{margin-top:4px;font:700 15px/1.12 Arial,Helvetica,sans-serif;color:var(--terraDark)}
+.path{font-size:19px;line-height:1.18}
+.shared{gap:4px}
+.shared .k{font:700 18px/1.14 "Courier New",monospace;letter-spacing:0;color:var(--ink)}
+.shared .ex{font:600 15px/1.16 "Courier New",monospace;letter-spacing:.1px;color:var(--muted)}
+
+/* notes + guardrail */
+.mid{margin-top:22px;display:grid;grid-template-columns:1.32fr 1fr;gap:18px;align-items:stretch}
+.guard{border:2px solid var(--terraDark);border-radius:12px;background:var(--terraBg);padding:20px 22px;display:flex;flex-direction:column;justify-content:center}
+.guard .tag{font:700 14px/1 "Courier New",monospace;letter-spacing:1px;text-transform:uppercase;color:var(--terra)}
+.guard .big{margin:8px 0 8px;font:800 27px/1.02 Arial,Helvetica,sans-serif;letter-spacing:-.6px;color:var(--terraDark)}
+.guard .small{font-size:18px;line-height:1.22;color:var(--ink)}
+.note{border:2px solid var(--line);border-radius:12px;background:var(--white);padding:20px 22px;display:flex;flex-direction:column;justify-content:center;gap:12px}
+.note p{margin:0;font-size:17px;line-height:1.22;color:var(--ink)}
+.note b{color:var(--terraDark)}
+
+/* takeaway */
+.takeaway{margin-top:26px;border-top:2px solid var(--ink);padding:24px 0 0;display:grid;grid-template-columns:56px 1fr;gap:18px;align-items:center}
+.mark{width:56px;height:56px;border-radius:50%;background:var(--terra);display:grid;place-items:center;color:#fff;font:800 32px/1 Arial,Helvetica,sans-serif}
+.takeaway strong{display:block;font:800 29px/1.1 Arial,Helvetica,sans-serif;letter-spacing:-.6px}
+.takeaway .caveat{display:block;margin-top:8px;font-size:17px;line-height:1.22;color:var(--muted)}
+
+footer{margin-top:auto;padding-top:14px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;font:600 15px/1.2 "Courier New",monospace;color:var(--muted)}
+footer .src{letter-spacing:.2px}
+footer .handle{color:var(--terraDark);font-weight:700}
+</style>
+</head>
+<body>
+<main class="canvas">
+ <div class="eyebrow">Inside of the Day — Platform engineering for agents</div>
+ <h1>Your platform has <em>two users</em> now:<br>people and agents.</h1>
+ <p class="sub">I stopped treating the internal platform as a portal. <b>It is a set of safe, discoverable contracts.</b></p>
+
+ <!-- top flow: two front doors, one contract, one control plane -->
+ <section class="flow" aria-label="Two front doors into one platform contract and control plane">
+  <div class="doors">
+   <div class="door person"><div class="who">PERSON</div><div class="paths">portal · form · PR</div></div>
+   <div class="door agent"><div class="who">AGENT</div><div class="paths">catalog · API · tool</div></div>
+  </div>
+  <svg class="bracket" viewBox="0 0 44 150" preserveAspectRatio="none" aria-hidden="true">
+   <path d="M0 37 H26 Q34 37 34 55 V70 Q34 75 40 75 H44" fill="none" stroke="#37627e" stroke-width="3"/>
+   <path d="M0 113 H26 Q34 113 34 95 V80 Q34 75 40 75 H44" fill="none" stroke="#3a7466" stroke-width="3"/>
+  </svg>
+  <div class="merge">
+   <div class="mergerow">
+    <div class="contract"><div class="t">ONE PLATFORM CONTRACT</div><div class="s">same intent · same guardrails</div></div>
+    <div class="arrowbig">&rarr;</div>
+    <div class="plane"><div class="t">CONTROL PLANE</div><div class="s">infra API · policy · approval · identity</div></div>
+   </div>
+  </div>
+ </section>
+
+ <!-- five buildable layers -->
+ <section class="blueprint" aria-label="Five buildable platform layers">
+  <div class="grid hdr">
+   <div class="lay">LAYER</div>
+   <div class="human">HUMAN PATH</div>
+   <div class="agent">AGENT PATH</div>
+   <div class="shared">SHARED CONTRACT · EXAMPLE</div>
+  </div>
+
+  <div class="grid">
+   <div class="lay"><span class="num">1</span><span class="name">DISCOVER</span><span class="ben">▸ one golden path</span></div>
+   <div class="path cell-human">Browse catalog, choose a template</div>
+   <div class="path cell-agent">Read catalog, invoke the template</div>
+   <div class="shared"><span class="k">catalog-info.yaml + template</span><span class="ex">Backstage Catalog / Scaffolder</span></div>
+  </div>
+
+  <div class="grid">
+   <div class="lay"><span class="num">2</span><span class="name">REQUEST INFRA</span><span class="ben">▸ declarative self-service</span></div>
+   <div class="path cell-human">Fill the platform form</div>
+   <div class="path cell-agent">Emit the same YAML</div>
+   <div class="shared"><span class="k">CRD / XRD schema</span><span class="ex">Crossplane Composition</span></div>
+  </div>
+
+  <div class="grid">
+   <div class="lay"><span class="num">3</span><span class="name">GATE&nbsp;CHANGE</span><span class="ben">▸ no privileged side door</span></div>
+   <div class="path cell-human">Open a PR / apply</div>
+   <div class="path cell-agent">Same PR + policy check</div>
+   <div class="shared"><span class="k">policy-as-code</span><span class="ex">Kyverno / OPA + GitOps</span></div>
+  </div>
+
+  <div class="grid">
+   <div class="lay"><span class="num">4</span><span class="name">PROVE IDENTITY</span><span class="ben">▸ no shared admin key</span></div>
+   <div class="path cell-human">SSO identity</div>
+   <div class="path cell-agent">Short-lived workload identity</div>
+   <div class="shared"><span class="k">identity &rarr; authorization</span><span class="ex">SPIFFE/SPIRE or cloud workload identity</span></div>
+  </div>
+
+  <div class="grid row-last">
+   <div class="lay"><span class="num">5</span><span class="name">DISCOVER TOOLS</span><span class="ben">▸ no UI scraping</span></div>
+   <div class="path cell-human">Read the API docs</div>
+   <div class="path cell-agent">Call the typed API / tool</div>
+   <div class="shared"><span class="k">OpenAPI</span><span class="ex">MCP only as a transport</span></div>
+  </div>
+ </section>
+
+ <!-- guardrail callout (near layers 3–5) + interface notes -->
+ <section class="mid" aria-label="Guardrails and interface boundaries">
+  <div class="guard">
+   <div class="tag">Guardrails on layers 3–5</div>
+   <div class="big">Agent-ready &ne; agent-admin.</div>
+   <div class="small">Same policy. Scoped identity. Approval for irreversible change.</div>
+  </div>
+  <div class="note">
+   <p><b>MCP</b> is an interface transport, not a maturity solution.</p>
+   <p><b>OpenAPI</b> describes the interface surface, not every side effect.</p>
+  </div>
+ </section>
+
+ <!-- takeaway + caveat -->
+ <section class="takeaway"><div class="mark">&#8594;</div><div><strong>Design the machine path as a first-class front door — with the same guardrails as the human one.</strong><span class="caveat">Implementation framework inspired by Piotr&rsquo;s ITNEXT article — not a CNCF standard.</span></div></section>
+
+ <footer><span class="src">itnext.io · backstage.io · docs.crossplane.io · kyverno.io · spiffe.io · openapis.org</span><span class="handle">@vitalylobachev</span></footer>
+</main>
+</body>
+</html>
