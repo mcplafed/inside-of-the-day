@@ -1,0 +1,29 @@
+Не спешите зарывать длинную много часовую сессию!
+
+После нескольких часов работы агент уже прошёл через поиск, ошибки, противоречия, неудачные попытки и исправления. Это не мусорный контекст. Это дорогой опыт.
+
+Проблема в том, что обычно вместе с сессией мы выбрасываем и этот опыт.
+
+Я хочу, чтобы в конце серьёзной работы агент не писал summary ради summary, а улучшал свою рабочую среду. Для этого я дал ему команду /improve.
+
+В конце сессии она:
+
+- находит повторяющиеся паттерны и ошибки;
+- превращает длинные и хрупкие команды в проверяемые скрипты;
+- сохраняет только полезные уроки в память, правила и skills.
+
+Не нужно сохранять весь разговор. Логи, временное состояние и секреты должны исчезать вместе с сессией. Оставаться должны только проверенные, повторно используемые улучшения.
+
+Я проверил этот подход в Claude Code: один универсальный промпт создаёт нативную /improve для среды агента.
+
+Вот сам промпт:
+
+Create a reusable command called /improve for this agent environment.
+
+First inspect how this system supports reusable commands, skills, prompts, or plugins. Use the simplest native mechanism that makes /improve available in future sessions. Do not invent a parallel framework if the environment already has one.
+
+When /improve is invoked at the end of substantial work, review the session for durable lessons, repeated mistakes, failed assumptions, unnecessary retries, and fragile or overly long shell commands. Turn only evidence-based lessons into the correct memory, scoped instructions, helper scripts, or existing skills. Never persist secrets, raw logs, private data, or temporary task state. Validate every change and report what changed, why, where it was saved, and what was deliberately not persisted.
+
+Длинная сессия не должна заканчиваться историей чата. Она должна делать следующую сессию лучше.
+
+#AIAgents #AgentEngineering #SoftwareEngineering #DeveloperExperience

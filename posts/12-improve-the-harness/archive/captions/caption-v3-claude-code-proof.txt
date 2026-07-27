@@ -1,0 +1,30 @@
+Don't bury a long agent session.
+
+The final answer is often the least interesting thing it produced.
+
+A serious session contains failed searches, conflicting information, bad assumptions, corrections, and fragile commands that became too long to review safely. That is expensive operational learning.
+
+I want the session to leave behind more than a transcript. So I give the agent an /improve command.
+
+At the end of substantial work, it reviews what happened and asks:
+
+- What kept recurring?
+- What went wrong and needed correction?
+- Which commands should become a tested script?
+- Which lesson belongs in memory, a rule, or an existing skill?
+
+The important constraint: it does not save everything. Raw logs, temporary task state, secrets, and one-off details should disappear with the session. Only durable, verified lessons stay.
+
+The output is a better harness: fewer rediscovered mistakes, safer defaults, and less manual work next time.
+
+Here is the universal prompt I use to install that loop. I tested this exact approach in Claude Code: one prompt, then /improve is ready for the next session.
+
+Create a reusable command called /improve for this agent environment.
+
+First inspect how this system supports reusable commands, skills, prompts, or plugins. Use the simplest native mechanism that makes /improve available in future sessions. Do not invent a parallel framework if the environment already has one.
+
+When /improve is invoked at the end of substantial work, review the session for durable lessons, repeated mistakes, failed assumptions, unnecessary retries, and fragile or overly long shell commands. Turn only evidence-based lessons into the correct memory, scoped instructions, helper scripts, or existing skills. Never persist secrets, raw logs, private data, or temporary task state. Validate every change and report what changed, why, where it was saved, and what was deliberately not persisted.
+
+A long session should not end as chat history. It should make the next session better.
+
+#AIAgents #AgentEngineering #SoftwareEngineering #DeveloperExperience
