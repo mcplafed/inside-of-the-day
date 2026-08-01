@@ -1,0 +1,31 @@
+I kept adding agents to my workflow. The total kept getting worse.
+
+Each agent was fine alone. Call it 90%. Two felt like 70%. Four felt like 50%. Those numbers are my read on my own workflow, not a benchmark - the shape is the point.
+
+The shape has a name: the coordination tax. Five sources.
+
+Re-explaining context: every agent needs the full briefing, not the delta.
+Reconciling outputs: two agents, two answers, someone has to merge them.
+Conflicting decisions: A deploys, B reverts; A writes the test, B changes what it tests.
+Duplicated work: neither agent knew the other had already done it.
+Waiting on dependencies: B can't start until A finishes, and A is waiting on C.
+
+Fred Brooks named this in 1975 - adding manpower to a late software project makes it later. Training can't be partitioned, so it grows linearly with headcount; intercommunication is worse, where "the effort increases as n(n-1)/2." Every pair is a pair that can disagree. Agents are not exempt.
+
+Measurement agrees, and it's more interesting than "more agents bad." Kim et al. ran 260 configurations over six benchmarks at a fixed token budget. Against a single agent, results ran from +80.8% on decomposable financial reasoning to -70.0% on sequential planning. Every multi-agent variant degraded sequential work, communication grew superlinearly with agent count, and where the single agent was already strong, more agents gave negative returns.
+
+Anthropic, who ship a multi-agent research system, draw the same line: work needing shared context or many inter-agent dependencies is not a good fit today.
+
+The tax is charged on coupling, not headcount. So:
+
+I stopped adding agents to parallelize work that isn't independent. I ask one question first - is this decomposable, or am I just buying communication overhead? I keep one agent on the full chain when steps depend on each other. I split only when subtasks are truly independent and I have a merge strategy.
+
+The coordination tax is real. More agents is not more throughput - it's more overhead. Decompose only when the subtasks are truly independent.
+
+Sources
+Brooks, The Mythical Man-Month (1975): https://en.wikipedia.org/wiki/The_Mythical_Man-Month
+Kim et al., Scaling Agent Systems: https://arxiv.org/abs/2512.08296
+Anthropic: https://www.anthropic.com/engineering/multi-agent-research-system
+Yan, Don't Build Multi-Agents: https://cognition.com/blog/dont-build-multi-agents
+
+#InsideOfTheDay #AIAgents #MultiAgent #CoordinationTax

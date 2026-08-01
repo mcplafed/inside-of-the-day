@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Each agent is 90%. Together they hit 50%.</title>
+<style>
+:root{
+  --paper:#f5efe4;--ink:#26302f;--muted:#6a736e;--line:#d8cfc0;
+  --terra:#bd5a3c;--terraDark:#8f3e29;--terraBg:#f4e2d9;
+  --white:#fffdf9;--band:#efe7d8;
+}
+*{box-sizing:border-box}
+html,body{margin:0;width:1080px;height:1350px;background:var(--paper)}
+body{color:var(--ink);font-family:Arial,Helvetica,sans-serif;-webkit-font-smoothing:antialiased}
+.canvas{width:1080px;height:1350px;padding:46px 60px 36px;display:flex;flex-direction:column;overflow:hidden}
+
+/* header */
+.eyebrow{font:700 20px/1.2 "Courier New",monospace;letter-spacing:1.5px;color:var(--terraDark);text-transform:uppercase}
+h1{font-weight:800;margin:12px 0 10px;font-size:62px;line-height:.98;letter-spacing:-2.2px}
+h1 em{font-style:normal;color:var(--terraDark)}
+.sub{margin:0;font-size:26px;line-height:1.2;color:var(--muted)}
+.sub b{color:var(--ink);font-weight:700}
+
+/* chart card */
+.chart{flex:none;margin-top:18px;border:2px solid var(--ink);border-radius:14px;background:var(--white);padding:16px 24px 12px}
+.chart .head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}
+.chart .head .t{font:700 17px/1.1 "Courier New",monospace;letter-spacing:1px;text-transform:uppercase;color:var(--ink)}
+.chart .head .k{font:700 17px/1.1 "Courier New",monospace;letter-spacing:.6px;text-transform:uppercase;color:var(--muted)}
+.chart svg{display:block;width:100%}
+.taxbar{margin-top:8px;border:2px solid var(--terraDark);border-radius:10px;background:var(--terraBg);
+        padding:11px 18px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.taxbar .big{font:800 26px/1.05 Arial,Helvetica,sans-serif;letter-spacing:-.6px;color:var(--terraDark)}
+.taxbar .cav{font:700 17px/1.15 "Courier New",monospace;color:var(--terraDark);text-align:right;flex:0 0 322px}
+
+/* five sources */
+.sources{flex:none;margin-top:14px;border:2px solid var(--ink);border-radius:14px;background:var(--white);overflow:hidden}
+.sources .hdr{background:var(--band);padding:9px 22px;font:700 16px/1.1 "Courier New",monospace;
+              letter-spacing:1.2px;text-transform:uppercase;color:var(--terraDark);border-bottom:1px solid var(--line)}
+.row{display:grid;grid-template-columns:52px 340px 1fr;align-items:center;gap:0;
+     padding:11px 20px;border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:none}
+.row .n{width:38px;height:38px;border-radius:50%;background:var(--terra);color:#fff;
+        display:grid;place-items:center;font:800 21px/1 Arial,Helvetica,sans-serif}
+.row .lab{font:800 25px/1.02 Arial,Helvetica,sans-serif;letter-spacing:-.7px;padding-right:16px;
+          white-space:nowrap}
+.row .exp{font-size:19px;line-height:1.18;color:var(--ink)}
+
+/* takeaway */
+.takeaway{flex:none;margin-top:16px;border-top:2px solid var(--ink);padding-top:18px;
+          display:grid;grid-template-columns:56px 1fr;gap:18px;align-items:center}
+.mark{width:56px;height:56px;border-radius:50%;background:var(--terra);display:grid;place-items:center;
+      color:#fff;font:800 32px/1 Arial,Helvetica,sans-serif}
+.takeaway strong{display:block;font:800 28px/1.1 Arial,Helvetica,sans-serif;letter-spacing:-.7px}
+.takeaway .caveat{display:block;margin-top:7px;font-size:16px;line-height:1.2;color:var(--muted)}
+
+footer{margin-top:auto;padding-top:12px;border-top:1px solid var(--line);display:flex;
+       justify-content:space-between;align-items:center;font:600 15px/1.2 "Courier New",monospace;color:var(--muted)}
+footer .handle{color:var(--terraDark);font-weight:700}
+</style>
+</head>
+<body>
+<main class="canvas">
+ <div class="eyebrow">Inside of the Day &mdash; Running agents</div>
+ <h1>Each agent is 90%.<br>Together they hit <em>50%</em>.</h1>
+ <p class="sub">I kept adding agents to my workflow. <b>The total kept getting worse.</b></p>
+
+ <!-- chart: effectiveness per agent vs agent count, with the tax as the shaded gap -->
+ <section class="chart" aria-label="Effectiveness per agent falls as agents are added">
+  <div class="head">
+   <span class="t">How effective each agent stays</span>
+   <span class="k">shaded = coordination tax</span>
+  </div>
+
+  <svg viewBox="0 0 908 336" role="img" aria-label="Bar chart: 1 agent 90 percent, 2 agents 70 percent, 3 agents 55 percent, 4 agents 50 percent, against a dashed expected line at 90 percent">
+   <defs>
+    <pattern id="hatch" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+     <rect width="12" height="12" fill="#f4e2d9"/>
+     <line x1="0" y1="0" x2="0" y2="12" stroke="#dfa793" stroke-width="4"/>
+    </pattern>
+   </defs>
+
+   <!-- expected level -->
+   <text x="8" y="26" font-family="'Courier New',monospace" font-size="21" font-weight="700" fill="#8f3e29" letter-spacing="0.6">WHAT YOU EXPECT &mdash; EVERY AGENT STAYS AT 90%</text>
+   <line x1="8" y1="40" x2="900" y2="40" stroke="#8f3e29" stroke-width="3" stroke-dasharray="12 9"/>
+
+   <!-- shaded tax gaps -->
+   <rect x="266.5" y="40" width="152" height="53.8" fill="url(#hatch)" stroke="#bd5a3c" stroke-width="2" stroke-dasharray="6 5"/>
+   <rect x="489.5" y="40" width="152" height="94.1" fill="url(#hatch)" stroke="#bd5a3c" stroke-width="2" stroke-dasharray="6 5"/>
+   <rect x="712.5" y="40" width="152" height="107.6" fill="url(#hatch)" stroke="#bd5a3c" stroke-width="2" stroke-dasharray="6 5"/>
+
+   <text x="342.5" y="77" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="27" font-weight="800" fill="#8f3e29">&#8722;20 pts</text>
+   <text x="565.5" y="97" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="27" font-weight="800" fill="#8f3e29">&#8722;35 pts</text>
+   <text x="788.5" y="104" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="27" font-weight="800" fill="#8f3e29">&#8722;40 pts</text>
+
+   <!-- bars -->
+   <rect x="43.5"  y="40"    width="152" height="242"   fill="#26302f"/>
+   <rect x="266.5" y="93.8"  width="152" height="188.2" fill="#26302f"/>
+   <rect x="489.5" y="134.1" width="152" height="147.9" fill="#26302f"/>
+   <rect x="712.5" y="147.6" width="152" height="134.4" fill="#26302f"/>
+
+   <text x="119.5" y="92"  text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="46" font-weight="800" fill="#fffdf9">90%</text>
+   <text x="342.5" y="146" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="46" font-weight="800" fill="#fffdf9">70%</text>
+   <text x="565.5" y="186" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="46" font-weight="800" fill="#fffdf9">55%</text>
+   <text x="788.5" y="200" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="46" font-weight="800" fill="#fffdf9">50%</text>
+
+   <!-- axis -->
+   <line x1="8" y1="282" x2="900" y2="282" stroke="#26302f" stroke-width="3"/>
+   <text x="119.5" y="315" text-anchor="middle" font-family="'Courier New',monospace" font-size="25" font-weight="700" fill="#26302f">1 AGENT</text>
+   <text x="342.5" y="315" text-anchor="middle" font-family="'Courier New',monospace" font-size="25" font-weight="700" fill="#26302f">2 AGENTS</text>
+   <text x="565.5" y="315" text-anchor="middle" font-family="'Courier New',monospace" font-size="25" font-weight="700" fill="#26302f">3 AGENTS</text>
+   <text x="788.5" y="315" text-anchor="middle" font-family="'Courier New',monospace" font-size="25" font-weight="700" fill="#26302f">4 AGENTS</text>
+  </svg>
+
+  <div class="taxbar">
+   <span class="big">The gap is the coordination tax. It grows faster than the agent count.</span>
+   <span class="cav">Illustrative shape from my own workflow &mdash; not measured values.</span>
+  </div>
+ </section>
+
+ <!-- five sources of the tax -->
+ <section class="sources" aria-label="Five sources of the coordination tax">
+  <div class="hdr">Where the tax comes from</div>
+  <div class="row"><span class="n">1</span><span class="lab">Re-explaining context</span><span class="exp">Every agent needs the full briefing, not just the delta.</span></div>
+  <div class="row"><span class="n">2</span><span class="lab">Reconciling outputs</span><span class="exp">Two agents, two answers &mdash; a human or a third must merge them.</span></div>
+  <div class="row"><span class="n">3</span><span class="lab">Conflicting decisions</span><span class="exp">A deploys, B reverts. A writes the test, B changes what it tests.</span></div>
+  <div class="row"><span class="n">4</span><span class="lab">Duplicated work</span><span class="exp">Neither agent knew the other had already done it.</span></div>
+  <div class="row"><span class="n">5</span><span class="lab">Waiting on dependencies</span><span class="exp">B can&rsquo;t start until A finishes, and A is waiting on C.</span></div>
+ </section>
+
+ <!-- takeaway -->
+ <section class="takeaway">
+  <div class="mark">&#8594;</div>
+  <div>
+   <strong>The coordination tax is real. More agents is not more throughput &mdash; it&rsquo;s more overhead. Decompose only when the subtasks are truly independent.</strong>
+   <span class="caveat">Same pattern Brooks named in 1975: intercommunication effort grows as n(n&minus;1)/2. Measured on agents, results range from +80.8% on decomposable work to &minus;70.0% on sequential work.</span>
+  </div>
+ </section>
+
+ <footer><span class="src">Brooks 1975 &middot; Steiner 1972 &middot; arXiv:2512.08296 &middot; arXiv:2503.13657 &middot; anthropic.com</span><span class="handle">@vitalylobachev</span></footer>
+</main>
+</body>
+</html>
