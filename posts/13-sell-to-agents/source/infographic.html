@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Your next customer may not have a browser.</title>
+<style>
+:root{
+  --paper:#f5efe4;--ink:#26302f;--muted:#6a736e;--line:#d8cfc0;
+  --terra:#bd5a3c;--terraDark:#8f3e29;--terraBg:#f4e2d9;
+  --blue:#3d6577;--blueBg:#e5edf1;
+  --green:#3f6b52;--greenBg:#e6eee8;
+  --white:#fffdf9;--band:#efe7d8;
+}
+*{box-sizing:border-box}
+html,body{margin:0;width:1080px;height:1350px;background:var(--paper)}
+body{color:var(--ink);font-family:Arial,Helvetica,sans-serif;-webkit-font-smoothing:antialiased}
+.canvas{width:1080px;height:1350px;padding:40px 60px 30px;display:flex;flex-direction:column;overflow:hidden}
+
+/* ---------- header ---------- */
+.eyebrow{font:700 19px/1.2 "Courier New",monospace;letter-spacing:1.5px;color:var(--terraDark);text-transform:uppercase}
+h1{font-weight:800;margin:11px 0 9px;font-size:59px;line-height:.96;letter-spacing:-1.6px;text-transform:uppercase}
+h1 em{font-style:normal;color:var(--terraDark)}
+.ask{margin:0;font-size:31px;line-height:1.1;font-weight:700;letter-spacing:-.6px}
+.sub{margin:6px 0 0;font-size:19px;line-height:1.2;color:var(--muted)}
+
+/* ---------- contrast ---------- */
+.contrast{flex:none;margin-top:15px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.col{border:2px solid var(--ink);border-radius:14px;background:var(--white);overflow:hidden}
+.col .ch{padding:8px 18px;font:800 24px/1.1 Arial,Helvetica,sans-serif;letter-spacing:-.5px;
+         color:#fff;display:flex;justify-content:space-between;align-items:center}
+.col.human .ch{background:var(--blue)}
+.col.agent .ch{background:var(--terra)}
+.col .ch .tag{font:700 13px/1 "Courier New",monospace;letter-spacing:.8px;opacity:.92}
+.col ul{margin:0;padding:6px 18px 8px;list-style:none}
+.col li{font-size:21px;line-height:1.16;padding:6px 0 6px 20px;position:relative;border-bottom:1px solid var(--line)}
+.col li:last-child{border-bottom:none}
+.col li::before{content:"";position:absolute;left:0;top:12px;width:9px;height:9px;border-radius:2px}
+.col.human li::before{background:var(--blue)}
+.col.agent li::before{background:var(--terra)}
+
+.conv{display:block;width:100%;height:40px}
+
+.contract{border:3px solid var(--ink);border-radius:14px;background:var(--greenBg);
+          padding:11px 22px 12px;text-align:center}
+.contract .t{font:800 30px/1.05 Arial,Helvetica,sans-serif;letter-spacing:-.7px;color:var(--green);
+             text-transform:uppercase}
+.contract .d{margin-top:5px;font:700 20px/1.15 Arial,Helvetica,sans-serif;color:var(--ink);letter-spacing:-.2px}
+.contract .n{margin-top:5px;font:700 14px/1.25 "Courier New",monospace;color:var(--muted)}
+
+/* ---------- checklist ---------- */
+.checklist{flex:none;margin-top:14px;border:2px solid var(--ink);border-radius:14px;background:var(--white);overflow:hidden}
+.checklist .hdr{background:var(--band);padding:8px 20px;border-bottom:1px solid var(--line);
+                display:flex;justify-content:space-between;align-items:center;gap:14px}
+.checklist .hdr .h{font:800 24px/1.1 Arial,Helvetica,sans-serif;letter-spacing:-.5px;color:var(--terraDark)}
+.checklist .hdr .lbl{font:700 13px/1.2 "Courier New",monospace;color:var(--muted);text-align:right;flex:0 0 430px}
+.row{display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:start;
+     padding:9px 20px;border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:none}
+.row .n{width:34px;height:34px;border-radius:50%;background:var(--terra);color:#fff;
+        display:grid;place-items:center;font:800 19px/1 Arial,Helvetica,sans-serif;margin-top:1px}
+.row .q{display:block;font:800 24px/1.06 Arial,Helvetica,sans-serif;letter-spacing:-.5px}
+.row .a{display:block;margin-top:3px;font-size:18px;line-height:1.17;color:var(--ink)}
+.row .a b{color:var(--terraDark);font-weight:700}
+
+/* ---------- takeaway ---------- */
+.takeaway{flex:none;margin-top:13px;border-top:2px solid var(--ink);padding-top:13px;
+          display:grid;grid-template-columns:50px 1fr;gap:16px;align-items:center}
+.mark{width:50px;height:50px;border-radius:50%;background:var(--terra);display:grid;place-items:center;
+      color:#fff;font:800 28px/1 Arial,Helvetica,sans-serif}
+.takeaway strong{display:block;font:800 27px/1.09 Arial,Helvetica,sans-serif;letter-spacing:-.6px}
+.takeaway .caveat{display:block;margin-top:5px;font-size:15px;line-height:1.2;color:var(--muted)}
+
+footer{margin-top:auto;padding-top:10px;border-top:1px solid var(--line);display:flex;
+       justify-content:space-between;align-items:center;gap:22px;
+       font:600 13px/1.2 "Courier New",monospace;color:var(--muted)}
+footer .handle{color:var(--terraDark);font-weight:700;white-space:nowrap}
+</style>
+</head>
+<body>
+<main class="canvas">
+ <div class="eyebrow">Inside of the Day &mdash; Selling to agents</div>
+ <h1>Your next customer may<br>not have a <em>browser</em>.</h1>
+ <p class="ask">Are you ready to sell directly to an agent?</p>
+ <p class="sub">I stopped asking whether agents can pay. I started asking whether my business can sell to one.</p>
+
+ <!-- central contrast: two customers, one contract -->
+ <section class="contrast" aria-label="Human customer and agent customer meet in the same commerce contract">
+  <div class="cols">
+   <div class="col human">
+    <div class="ch"><span>Human customer</span><span class="tag">BUYS BY LOOKING</span></div>
+    <ul>
+     <li>browses pages</li>
+     <li>compares visual cards</li>
+     <li>fills a checkout form</li>
+     <li>receives an email</li>
+    </ul>
+   </div>
+   <div class="col agent">
+    <div class="ch"><span>Agent customer</span><span class="tag">BUYS BY READING</span></div>
+    <ul>
+     <li>reads structured product data</li>
+     <li>queries price + availability</li>
+     <li>sends an authenticated order request</li>
+     <li>consumes a machine-readable confirmation</li>
+    </ul>
+   </div>
+  </div>
+
+  <svg class="conv" viewBox="0 0 960 40" preserveAspectRatio="none" role="img" aria-label="Both customer paths converge on one commerce contract">
+   <!-- left path: human column centre (240) into contract -->
+   <path d="M 240 0 L 240 14 L 430 14 L 430 26" fill="none" stroke="#3d6577" stroke-width="4"/>
+   <polygon points="430,38 421,25 439,25" fill="#3d6577"/>
+   <!-- right path: agent column centre (720) into contract -->
+   <path d="M 720 0 L 720 14 L 530 14 L 530 26" fill="none" stroke="#bd5a3c" stroke-width="4"/>
+   <polygon points="530,38 521,25 539,25" fill="#bd5a3c"/>
+  </svg>
+
+  <div class="contract">
+   <div class="t">Your commerce contract</div>
+   <div class="d">catalog &bull; price &bull; eligibility &bull; checkout &bull; fulfillment &bull; support</div>
+   <div class="n">ONE CONTRACT, TWO FRONT DOORS &mdash; AND NO SINGLE UNIVERSAL STANDARD YET:<br>ACP (BETA, OPENAI/STRIPE) &middot; UCP (GOOGLE, SHOPIFY, AMAZON, STRIPE, WALMART) &middot; AP2 V0.2 (FIDO ALLIANCE)</div>
+  </div>
+ </section>
+
+ <!-- merchant-ready checklist -->
+ <section class="checklist" aria-label="A merchant-ready checklist, five questions">
+  <div class="hdr">
+   <span class="h">A merchant-ready checklist</span>
+   <span class="lbl">FRAMEWORK FOR READINESS &mdash; NOT PROOF THAT AGENTS<br>SHOULD BUY EVERYTHING AUTONOMOUSLY.</span>
+  </div>
+  <div class="row"><span class="n">1</span><span><span class="q">Can it find the product?</span><span class="a">Structured catalog, offer data, attributes, and terms &mdash; not only a visual page.</span></span></div>
+  <div class="row"><span class="n">2</span><span><span class="q">Can it trust the price and availability?</span><span class="a">Current price, currency, inventory, shipping, tax/fees, and eligibility returned from a reliable machine interface.</span></span></div>
+  <div class="row"><span class="n">3</span><span><span class="q">Can it place an authorized order?</span><span class="a">Authenticated identity, explicit delegation/consent, and a bounded checkout API &mdash; not an agent scraping buttons.</span></span></div>
+  <div class="row"><span class="n">4</span><span><span class="q">Can you fulfil and explain the outcome?</span><span class="a">Order confirmation, status, tracking, cancellation, return/refund rules, and a human escalation path.</span></span></div>
+  <div class="row"><span class="n">5</span><span><span class="q">Can you decline safely?</span><span class="a">Merchant controls for high-risk, regulated, age-restricted, contractual, or ambiguous purchases. <b>&ldquo;Agent-ready&rdquo; does not mean &ldquo;auto-approve.&rdquo;</b></span></span></div>
+ </section>
+
+ <!-- takeaway -->
+ <section class="takeaway">
+  <div class="mark">&#8594;</div>
+  <div>
+   <strong>A browser storefront is not an agent sales channel. Sell to agents only when your commerce contract is explicit, authorized, and reversible.</strong>
+   <span class="caveat">Refusal is already first-class: the ACP checkout spec defines region_restricted, age_verification_required and approval_required. AP2 separates Human Present from Human Not Present. The merchant stays merchant of record &mdash; and owns refunds and chargebacks.</span>
+  </div>
+ </section>
+
+ <footer><span class="src">agenticcommerce.dev &middot; ucp.dev &middot; ap2-protocol.org &middot; developers.openai.com &middot; shopify.dev &middot; schema.org</span><span class="handle">@vitalylobachev</span></footer>
+</main>
+</body>
+</html>

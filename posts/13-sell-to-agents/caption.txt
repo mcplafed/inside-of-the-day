@@ -1,0 +1,33 @@
+I stopped asking whether agents can pay. I started asking whether my business can sell to one.
+
+The wallet question is the easy one. The hard one: is my commerce contract machine-readable?
+
+A human customer browses pages, compares visual cards, fills a checkout form, gets an email. An agent customer reads structured product data, queries price and availability, sends an authenticated order request, consumes a machine-readable confirmation. Same contract underneath - catalog, price, eligibility, checkout, fulfillment, support. Most of us built one front door.
+
+Five questions before I call anything agent-ready:
+
+1. Can it find the product? Structured catalog and offer data, not only a visual page. Schema.org Offer already carries price, availability, eligibleRegion and return policy - but it is a vocabulary, not a transaction interface.
+
+2. Can it trust the price and availability? OpenAI's feed spec makes price, availability, target_countries and seller identity required.
+
+3. Can it place an authorized order? Being callable is not being authorized. AP2 v0.2 turns user approval into a signed Checkout Mandate on a "secure, non-agentic" surface and separates Human Present from Human Not Present. UCP links identity over OAuth 2.0.
+
+4. Can you fulfil and explain the outcome? ACP defines order_create and order_update webhooks carrying carrier, tracking_number, tracking_url and refunds. OpenAI is blunt: you handle refunds and chargebacks, as merchant of record.
+
+5. Can you decline safely? The row people skip. ACP's checkout errors already include region_restricted, age_verification_required and approval_required. Agent-ready does not mean auto-approve.
+
+There is no universal standard. ACP is beta (OpenAI, Stripe). UCP is co-developed by Google, Shopify, Amazon, Stripe, Walmart. AP2 is v0.2. Visa says its own agent product "is in the process of development and deployment." Vendor-specific, moving, not infrastructure.
+
+Not for every purchase. Regulated, age-restricted, contractual, medical, financial or irreversible goods need a human and controls that hold.
+
+A browser storefront is not an agent sales channel.
+
+Sources
+ACP: https://github.com/agentic-commerce-protocol/agentic-commerce-protocol
+UCP: https://ucp.dev
+AP2: https://ap2-protocol.org
+OpenAI: https://developers.openai.com/commerce/guides/key-concepts
+Visa: https://developer.visa.com/capabilities/visa-intelligent-commerce
+Offer: https://schema.org/Offer
+
+#InsideOfTheDay #AgenticCommerce #AIAgents #Commerce
