@@ -1,33 +1,27 @@
-I stopped asking whether agents can pay. I started asking whether my business can sell to one.
+I stopped asking whether agents can pay. I started mapping what a merchant must implement to accept one safely.
 
-The wallet question is the easy one. The hard one: is my commerce contract machine-readable?
+Are you ready to accept payments from AI agents? Not whether the agent can pay - whether your checkout can accept it safely.
 
-A human customer browses pages, compares visual cards, fills a checkout form, gets an email. An agent customer reads structured product data, queries price and availability, sends an authenticated order request, consumes a machine-readable confirmation. Same contract underneath - catalog, price, eligibility, checkout, fulfillment, support. Most of us built one front door.
+An agent cannot use a normal browser checkout reliably. It needs an explicit machine path: offer, authorization, recoverable outcome.
 
-Five questions before I call anything agent-ready:
+1. Publish a machine-readable offer. Offer data, live price and currency, availability, shipping, tax and returns, plus checkout eligibility. Schema.org Offer covers price, availability and returns - a vocabulary, not a transaction API. OpenAI's product feed spec adds is_eligible_search and is_eligible_checkout. Discoverable is not purchasable.
 
-1. Can it find the product? Structured catalog and offer data, not only a visual page. Schema.org Offer already carries price, availability, eligibleRegion and return policy - but it is a vocabulary, not a transaction interface.
+2. Open an agent checkout API. A bounded checkout session an authenticated agent can create, update, complete or cancel, with exact price, tax and terms answers and retry-safe idempotency. Agentic Commerce Protocol's Agentic Checkout API does this, with idempotency keys; still beta. UCP's capability model with OAuth identity linking is an early alternate path. A callable endpoint is not authorization: require an authenticated buyer and explicit intervention for 3DS, address or biometric.
 
-2. Can it trust the price and availability? OpenAI's feed spec makes price, availability, target_countries and seller identity required.
+3. Accept a bounded payment mandate. Scoped, expiring authorization - amount, currency, merchant and session binding - that you validate, accept or decline, plus machine-readable order status, tracking, refunds and cancellation. AP2 v0.2 uses a Checkout Mandate and a Payment Mandate signed on a trusted, non-agentic surface. ACP's Delegate Payment token is merchant- and session-bound, capped and expiring. Keep decline codes for age, region and high-risk cases, and a human approval boundary.
 
-3. Can it place an authorized order? Being callable is not being authorized. AP2 v0.2 turns user approval into a signed Checkout Mandate on a "secure, non-agentic" surface and separates Human Present from Human Not Present. UCP links identity over OAuth 2.0.
+These protocols are vendor-led and early: ACP is beta, AP2 is v0.2, UCP publishes no maturity label. Treat this as an implementation map, not universal infrastructure.
 
-4. Can you fulfil and explain the outcome? ACP defines order_create and order_update webhooks carrying carrier, tracking_number, tracking_url and refunds. OpenAI is blunt: you handle refunds and chargebacks, as merchant of record.
+And agents should not auto-purchase regulated, age-restricted, high-risk, contractual, medical, financial or irreversible goods without appropriate buyer authorization and merchant controls.
 
-5. Can you decline safely? The row people skip. ACP's checkout errors already include region_restricted, age_verification_required and approval_required. Agent-ready does not mean auto-approve.
-
-There is no universal standard. ACP is beta (OpenAI, Stripe). UCP is co-developed by Google, Shopify, Amazon, Stripe, Walmart. AP2 is v0.2. Visa says its own agent product "is in the process of development and deployment." Vendor-specific, moving, not infrastructure.
-
-Not for every purchase. Regulated, age-restricted, contractual, medical, financial or irreversible goods need a human and controls that hold.
-
-A browser storefront is not an agent sales channel.
+Accepting agent payments is not adding a wallet button. It is exposing a safe commerce contract: offer, checkout, authorization, outcome.
 
 Sources
-ACP: https://github.com/agentic-commerce-protocol/agentic-commerce-protocol
-UCP: https://ucp.dev
-AP2: https://ap2-protocol.org
-OpenAI: https://developers.openai.com/commerce/guides/key-concepts
-Visa: https://developer.visa.com/capabilities/visa-intelligent-commerce
-Offer: https://schema.org/Offer
+https://schema.org/Offer
+https://developers.openai.com/commerce/product-feeds/spec
+https://www.agenticcommerce.dev/
+https://ap2-protocol.org/
+https://ucp.dev
+https://developers.openai.com/commerce/guides/key-concepts
 
 #InsideOfTheDay #AgenticCommerce #AIAgents #Commerce

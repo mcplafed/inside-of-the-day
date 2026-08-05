@@ -3,8 +3,8 @@
 
 Renders the self-contained HTML at the 1080x1350 logical canvas with a device
 scale factor of 3 (matching the series). Also emits a 400x500 downscaled probe
-used to check that the human/agent contrast block and the five checklist rows
-stay legible at LinkedIn mobile-feed size.
+used to check that the headline, the four-stage pipeline and the three step
+cards (action / example / guardrail) stay legible at LinkedIn mobile-feed size.
 
 Usage: python3 render.py
 """
@@ -21,7 +21,11 @@ PROBE_WIDTH, PROBE_HEIGHT = 400, 500
 
 # Panels that clip their own content when it grows: the canvas plus every
 # overflow:hidden card. A silent overflow here means unreadable substantive text.
-GUARDED = [".canvas", ".col.human", ".col.agent", ".checklist"]
+GUARDED = [".canvas", ".card.c1", ".card.c2", ".card.c3"]
+
+# Text that must never wrap or the layout intent breaks (headline, pipeline
+# chips, step titles, action lines, merchant-owns pills).
+NOWRAP_CHECK = [".chip .v", ".card .hd .t", ".act", ".owns .items span"]
 
 
 def main() -> None:
@@ -34,6 +38,7 @@ def main() -> None:
         )
         page.goto(SRC.as_uri())
         page.wait_for_timeout(150)
+
         overflow = page.evaluate(
             "sels => sels.map(sel => {"
             " const el = document.querySelector(sel);"
@@ -45,6 +50,21 @@ def main() -> None:
             print(f"WARNING: {sel} content overflows by {delta}px")
         if not overflow:
             print("layout OK: no panel overflows")
+
+        # Report how many rendered lines each measured text block occupies, so a
+        # copy edit that silently pushes a line into a second row is visible.
+        lines = page.evaluate(
+            "sels => sels.flatMap(sel => [...document.querySelectorAll(sel)].map(el => {"
+            " const lh = parseFloat(getComputedStyle(el).lineHeight);"
+            " const n = Math.round(el.getBoundingClientRect().height / lh);"
+            " return [sel, el.textContent.trim().slice(0, 46), n];"
+            "}));",
+            NOWRAP_CHECK,
+        )
+        for sel, text, n in lines:
+            flag = "" if n <= 2 else "  <-- CHECK"
+            print(f"lines[{n}] {sel}: {text}{flag}")
+
         page.screenshot(path=str(OUT), clip={"x": 0, "y": 0, "width": WIDTH, "height": HEIGHT})
         browser.close()
     print(f"wrote {OUT}")
@@ -53,6 +73,7 @@ def main() -> None:
     from PIL import Image
 
     img = Image.open(OUT)
+    print(f"render size: {img.size[0]}x{img.size[1]}")
     probe = img.resize((PROBE_WIDTH, PROBE_HEIGHT), Image.LANCZOS)
     probe.save(PROBE)
     print(f"wrote {PROBE}")

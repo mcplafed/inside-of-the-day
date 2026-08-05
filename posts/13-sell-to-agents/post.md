@@ -1,179 +1,189 @@
-# Your next customer may not have a browser.
+# ARE YOU READY TO ACCEPT PAYMENTS FROM AI AGENTS?
 
-**Main question:** Are you ready to sell directly to an agent?
-
-**Subhead:** I stopped asking whether agents can pay. I started asking whether my business can
-sell to one.
+**Subhead:** The question is no longer whether agents can pay. It is whether your checkout can
+accept them safely.
 
 ## Format
 
-Single-image portrait infographic for LinkedIn (4:5). Not a carousel. One editorial poster: a
-dominant human-customer / agent-customer contrast converging on one shared commerce contract,
-then a five-row merchant-ready checklist, then the takeaway.
+Single-image portrait infographic for LinkedIn (4:5). Not a carousel. One editorial poster: giant
+headline question, an unmissable four-stage machine pipeline, three substantial implementation
+cards (action / example / guardrail), a "merchant owns" bar, the takeaway and a compact protocol
+caveat.
 
-Broad-reach topic: a merchant or product leader with no protocol knowledge should get the point
-from the headline and the contrast block alone. The five questions are business questions, not
-integration steps.
+This is an **implementation guide with exactly three steps**, not a readiness checklist. The
+merchant remains the protagonist: every step is something the merchant builds and controls.
 
-## Core insight
+## Core framing
 
-The merchant is the protagonist. The agent is a new kind of customer.
+An agent cannot use a normal browser checkout reliably. To accept an agent payment, a merchant
+needs an explicit machine path from offer to authorization to a recoverable order outcome.
 
-Humans buy through pages, forms, visual checkout and ambiguous conversations. An agent needs
-structured answers: what exists, what it costs now, whether it is available, whether the buyer is
-eligible, how it can pay, what happens after checkout, and how returns and support work. A
-beautiful browser storefront is not a machine-readable sales channel.
+That path is the post:
 
-This is deliberately **not** a post about whether an agent has a wallet. Payment is the easy
-half and the most-covered half. The unanswered half is whether the business can state its own
-commerce contract in a form a machine can consume, and refuse when it should.
+```
+MACHINE-READABLE OFFER -> AGENT CHECKOUT API -> BOUNDED PAYMENT MANDATE -> ORDER OUTCOME
+```
 
-## Mechanism
+Not a wallet post. Payment credentials are the covered half; the unanswered half is whether the
+business exposes a machine-consumable commerce contract and can refuse when it should.
 
-### The contrast
+## The three-step implementation blueprint
 
-| Human customer | Agent customer |
-|---|---|
-| browses pages | reads structured product data |
-| compares visual cards | queries price + availability |
-| fills a checkout form | sends an authenticated order request |
-| receives an email | consumes a machine-readable confirmation |
+### STEP 1 - PUBLISH A MACHINE-READABLE OFFER
 
-Both paths must meet in the same middle: **your commerce contract** - catalog, price,
-eligibility, checkout, fulfillment, support. Most merchants have built one front door onto it.
+**Action:** Give the agent a truthful product, price and eligibility record.
 
-### The merchant-ready checklist
+**Implement:**
 
-1. **Can it find the product?** Structured catalog, offer data, attributes and terms - not only a
-   visual page.
-2. **Can it trust the price and availability?** Current price, currency, inventory, shipping,
-   tax/fees and eligibility returned from a reliable machine interface.
-3. **Can it place an authorized order?** Authenticated identity, explicit delegation/consent and
-   a bounded checkout API - not an agent scraping buttons.
-4. **Can you fulfil and explain the outcome?** Order confirmation, status, tracking,
-   cancellation, return/refund rules and a human escalation path.
-5. **Can you decline safely?** Merchant controls for high-risk, regulated, age-restricted,
-   contractual or ambiguous purchases. "Agent-ready" does not mean "auto-approve."
+- product/offer data, live price + currency, availability, shipping/tax/returns, and checkout
+  eligibility;
+- distinguish **discoverable** from **purchasable**.
+
+**Verified examples:**
+
+- **schema.org `Offer`** - vocabulary for product, price, `availability`, `hasMerchantReturnPolicy`,
+  `eligibleRegion`. A vocabulary, **not a transaction API**.
+- **OpenAI Product Feed** (`developers.openai.com`) - `is_eligible_search` and
+  `is_eligible_checkout` as two separate merchant decisions; `seller_privacy_policy` and
+  `seller_tos` become required when checkout-eligible.
+
+**Guardrail:** *Discoverable is not purchasable. Keep checkout eligibility explicit.*
+
+### STEP 2 - OPEN AN AGENT CHECKOUT API
+
+**Action:** Let an authenticated agent build, update and complete a bounded checkout session.
+
+**Implement:**
+
+- checkout session lifecycle (create, update, fetch, complete/cancel); exact price, tax,
+  fulfilment and terms answers; idempotency for retry-safe requests;
+- agent identity/authentication and intervention paths for 3DS / address verification / biometric
+  as applicable.
+
+**Verified examples:**
+
+- **Agentic Commerce Protocol - Agentic Checkout API** (`agenticcommerce.dev`) -
+  `POST /checkout_sessions` plus update, fetch, `complete`, `cancel`; `Idempotency-Key` required on
+  all POSTs; session `status` from `not_ready_for_payment` to `ready_for_payment` to `completed`;
+  `capabilities.intervention` = 3ds / biometric / address_verification. Status: **beta**.
+- **UCP capability model / OAuth 2.0 identity linking** (`ucp.dev`) - declared capabilities
+  (Checkout, Identity Linking, Order) as an alternate, early **vendor-led** path.
+
+**Guardrail:** *A callable endpoint is not authorization. Require an authenticated buyer and
+explicit intervention when needed.*
+
+### STEP 3 - ACCEPT A BOUNDED PAYMENT MANDATE
+
+**Action:** Charge only what the buyer authorized - then return an order outcome an agent can act
+on.
+
+**Implement:**
+
+- scoped, expiring authorization (amount, currency, merchant/session binding); the merchant
+  validates and accepts or declines; machine-readable order confirmation/status, tracking, refund
+  and cancellation paths;
+- a human approval boundary and decline codes for age-restricted, region-restricted, high-risk and
+  ambiguous purchases.
+
+**Verified examples:**
+
+- **AP2 Checkout Mandate / Payment Mandate** (`ap2-protocol.org`) - **v0.2**; the closed mandate is
+  bound to a merchant-signed Checkout by cryptographic hash and is signed on a **Trusted Surface**,
+  described in the spec as "a secure, non-agentic interface"; the merchant MUST return a Checkout
+  Receipt.
+- **ACP Delegate Payment + order webhooks** (`agenticcommerce.dev`) - vault token scoped by
+  `max_amount`, `currency`, `checkout_session_id`, `merchant_id`, `expires_at`; `order_create` /
+  `order_update` webhooks carrying `carrier`, `tracking_number`, `tracking_url` and an
+  `adjustments[]` array for refunds.
+
+**Guardrail:** *Agent-ready is not auto-approve. Keep merchant policy, decline paths and human
+approval for high-risk orders.*
+
+## Merchant owns
+
+On the visual as an explicit bar: **price / acceptance / fulfilment / refunds / declines.**
+
+Primary-sourced: OpenAI states "OpenAI is not the merchant of record in the Agentic Commerce
+Protocol" and "Your platform is responsible for handling refunds and chargebacks, as you accepted
+the payment directly from the customer as the merchant of record." agenticcommerce.dev says
+businesses "maintain their customer relationships as the merchant of record, retaining control over
+which products can be sold, how they're presented, and how orders are fulfilled."
 
 ## Takeaway
 
-A browser storefront is not an agent sales channel. Sell to agents only when your commerce
-contract is explicit, authorized and reversible.
+Accepting agent payments is not adding a wallet button.
+It is exposing a safe commerce contract: offer -> checkout -> authorization -> outcome.
 
-## There is no authoritative universal standard - stated plainly
+## Compact visible caveat
 
-**This is the most important boundary in the post and it is on the visual.**
-
-As of August 2026 three overlapping, vendor-led agentic-commerce specifications exist, all early:
+**On the visual, verbatim:** "Current protocols are vendor-led and early: ACP is beta; AP2 is v0.2;
+UCP has no published maturity label. Use this as an implementation map, not a claim of universal
+infrastructure."
 
 | Spec | Maintainers / co-developers | Stated status |
 |---|---|---|
 | **ACP** (Agentic Commerce Protocol) | OpenAI + Stripe as Founding Maintainers; Stripe's docs also credit Meta as a creator | `beta` - verbatim in the repo README and status badge |
-| **UCP** (Universal Commerce Protocol) | "UCP Authors", Apache-2.0; co-developers listed on ucp.dev include Google, Shopify, Amazon, Stripe, Walmart | No published version or maturity label; lodging/food specs "coming soon" |
-| **AP2** (Agent Payments Protocol) | Google-initiated; v0.2 announced with a FIDO Alliance donation | v0.2; roadmap explicitly incomplete (cards / "pull" methods first) |
+| **AP2** (Agent Payments Protocol) | Google-initiated; v0.2 announced with a FIDO Alliance donation | v0.2; roadmap explicitly incomplete |
+| **UCP** (Universal Commerce Protocol) | "UCP Authors", Apache-2.0; co-developers listed on ucp.dev include Google, Shopify, Amazon, Stripe, Walmart | No published version or maturity label |
 
 They compose in intent - AP2's glossary defines UCP as "A protocol providing a Checkout Object
 standard when used with the Checkout Mandate" - but composition is a design goal, not deployed
-universal infrastructure. Card-network programmes are earlier still: Visa's own developer page
-for Visa Intelligent Commerce says "This product is in the process of development and
-deployment."
-
-So the post ships a **readiness checklist**, not an integration instruction. Every row is a
-question a merchant can answer today regardless of which spec wins.
-
-## What each checklist row rests on
-
-Full working: `research/merchant-readiness-for-ai-agents.md`.
-
-1. **Find.** schema.org `Offer` already carries `price`, `priceCurrency`, `availability`,
-   `inventoryLevel`, `priceValidUntil`, `eligibleRegion`, `eligibleCustomerType`,
-   `shippingDetails`, `hasMerchantReturnPolicy`, `itemCondition`. It is a **vocabulary, not a
-   transaction interface** - perfect structured data makes you discoverable, not sellable-to.
-   GS1 Digital Link + a GS1-conformant resolver cover identifier-first discovery.
-2. **Trust price and availability.** OpenAI's product feed spec makes `price` (with currency),
-   `availability` (`in_stock` / `out_of_stock` / `pre_order` / `backorder` / `unknown`),
-   `target_countries`, `store_country`, `seller_name` and `seller_url` required, and requires
-   `seller_privacy_policy` + `seller_tos` when a product is checkout-eligible. ACP's Feed API
-   models `Price`, `Availability`, `list_price` and normalized `UnitPrice`.
-3. **Authorized order.** Callable is not authorized. AP2 exists to close exactly that gap:
-   verifiable digital credentials carrying a **Checkout Mandate** ("cryptographic proof that the
-   Shopping Agent is authorized to purchase the Checkout that it has assembled") and a **Payment
-   Mandate**, each in an open (constraints) and closed (bound) stage, signed on a **Trusted
-   Surface** described as "a secure, non-agentic interface". AP2 separates **Human Present
-   (Direct)** from **Human Not Present (Autonomous)**. UCP supplies OAuth 2.0 Identity Linking.
-   ACP checkout carries `buyer.authentication_status`, `account_type` and intervention
-   capabilities (3ds / biometric / address_verification). Shopify gates direct checkout
-   completion behind agent trust tiers. W3C Verifiable Credentials Data Model 2.0 - the one
-   ratified web standard in this stack - has been a Recommendation since 15 May 2025.
-4. **Fulfil and explain.** ACP order webhooks (`order_create` / `order_update`) carry `carrier`,
-   `tracking_number`, `tracking_url` and an `adjustments[]` array for refunds. OpenAI requires
-   HMAC-signed `order_created` / `order_updated` webhooks and states the liability plainly: "Your
-   platform is responsible for handling refunds and chargebacks, as you accepted the payment
-   directly from the customer as the merchant of record." Return **terms** become machine-readable
-   via schema.org `hasMerchantReturnPolicy` and Google's `returnPolicyCategory` enum.
-5. **Decline safely.** The ACP checkout spec's `MessageError.code` enum already includes
-   `region_restricted`, `age_verification_required` and `approval_required`, with a `resolution`
-   of `requires_buyer_review` ("buyer must authorize"). Refusal is a first-class response type in
-   the protocol's own schema. Plus OpenAI's per-product `is_eligible_search` /
-   `is_eligible_checkout` flags and Shopify's trust tiers: three independent places to say no -
-   per product, per agent, per attempted order.
+universal infrastructure.
 
 ## Boundaries and claim discipline
 
-- **Preparedness framework, not a growth guarantee.** Stated on the visual: "Framework for
-  readiness - not proof that agents should buy everything autonomously."
-- **No claim that agents are already a dominant customer type.** No adoption, volume, revenue or
-  merchant-support figure was verified against a primary source, so **no number of that kind
-  appears anywhere** in the post, caption or visual.
+- **Implementation map, not universal infrastructure.** Stated in plain language on the visual and
+  in the caption, not buried here.
+- **No adoption, volume, revenue or merchant-count figure** appears anywhere in the post, caption
+  or visual - none was verified against a primary source.
 - **No claim that every business needs agent checkout today.**
 - **No claim that an agent can or should autonomously buy** regulated, high-risk, age-restricted,
-  contractual, medical, financial or irreversible goods. Human authorization and merchant
-  controls remain necessary.
-- **Not a wallet/crypto post.** x402 is recorded in the research brief as an optional
-  machine-to-machine example only, and Coinbase's own docs scope it to API and paywalled-resource
-  access rather than physical-goods commerce. It does not appear in the caption or the visual, and
-  the visual contains no wallet or crypto imagery.
-- **Vendor-specific and experimental status is stated in plain language** in the caption and on
-  the visual, not buried here.
+  contractual, medical, financial or irreversible goods. Appropriate buyer authorization and
+  merchant controls remain necessary; stated in the caption.
+- **Not a wallet/crypto post.** No wallet or crypto imagery on the visual; x402 stays in the
+  research brief as an optional machine-to-machine example only (Coinbase's own docs scope it to
+  API and paywalled-resource access, not physical-goods commerce).
 - **OAuth attribution is precise.** OAuth 2.0 identity linking is a **UCP** capability. ACP's
   `openapi.delegate_authentication.yaml` is 3-D Secure 2, despite prose summaries elsewhere
   describing it as OAuth delegation. Do not let an edit merge the two.
 - **AP2 naming is current.** "Intent Mandate / Cart Mandate" is v0.1-era terminology still
   circulating in blogs; the current spec uses **Checkout Mandate** and **Payment Mandate**.
-- **No fictional merchant or customer case studies.** No named customers, no invented outcomes.
 - **Mastercard Agent Pay is deliberately absent** - only secondary write-ups were reachable, no
   primary developer documentation was verified.
+- **No fictional merchant or customer case studies.**
 - **No public post number** in the eyebrow or visual (series is dropping public numbers).
 
 ## Sources
 
+Full working: `research/merchant-readiness-for-ai-agents.md`.
+
+Primary references named in the caption:
+
+- schema.org Offer: https://schema.org/Offer
+- OpenAI, product feed spec: https://developers.openai.com/commerce/product-feeds/spec
 - Agentic Commerce Protocol: https://www.agenticcommerce.dev/
+- Agent Payments Protocol (AP2): https://ap2-protocol.org/
+- Universal Commerce Protocol: https://ucp.dev
+- OpenAI, Agentic Commerce key concepts: https://developers.openai.com/commerce/guides/key-concepts
+
+Additional primary sources behind the step details:
+
 - ACP repository (status `beta`, dated spec versions, governance): https://github.com/agentic-commerce-protocol/agentic-commerce-protocol
-- ACP 2026-04-17 OpenAPI specs: https://github.com/agentic-commerce-protocol/agentic-commerce-protocol/tree/main/spec/2026-04-17/openapi
+- ACP 2026-04-17 OpenAPI specs (checkout, webhook, feed, delegate payment): https://github.com/agentic-commerce-protocol/agentic-commerce-protocol/tree/main/spec/2026-04-17/openapi
+- AP2 repository (specification, glossary, overview): https://github.com/google-agentic-commerce/AP2
+- OpenAI, going to production: https://developers.openai.com/commerce/guides/production
 - Stripe, Agentic Commerce Protocol: https://docs.stripe.com/agentic-commerce/acp
 - Stripe, Universal Commerce Protocol: https://docs.stripe.com/agentic-commerce/protocol
-- Universal Commerce Protocol: https://ucp.dev
 - UCP repository: https://github.com/Universal-Commerce-Protocol/ucp
-- Agent Payments Protocol (AP2): https://ap2-protocol.org/
-- AP2 repository (specification, glossary, overview): https://github.com/google-agentic-commerce/AP2
-- OpenAI, Agentic Commerce key concepts: https://developers.openai.com/commerce/guides/key-concepts
-- OpenAI, product feed spec: https://developers.openai.com/commerce/product-feeds/spec
-- OpenAI, going to production: https://developers.openai.com/commerce/guides/production
-- Shopify, Agentic commerce: https://shopify.dev/docs/agents
-- schema.org Offer: https://schema.org/Offer
-- Google, merchant listing structured data: https://developers.google.com/search/docs/appearance/structured-data/merchant-listing
-- Google, return policy structured data: https://developers.google.com/search/docs/appearance/structured-data/return-policy
-- GS1 Digital Link: https://www.gs1.org/standards/gs1-digital-link
 - W3C Verifiable Credentials Data Model 2.0: https://www.w3.org/TR/vc-data-model-2.0/
-- Visa Intelligent Commerce: https://developer.visa.com/capabilities/visa-intelligent-commerce
-- Research brief: `research/merchant-readiness-for-ai-agents.md`
 
 ## Assets
 
 - `assets/infographic.png`: final LinkedIn visual, 3240x4050 px (1080x1350 logical canvas at 3x).
 - `assets/infographic-mobile-probe.png`: 400x500 px mobile-feed legibility probe (downscaled from
   the full render).
-- `source/infographic.html`: editable, self-contained visual source (no external assets or
-  network dependencies; inline SVG converging arrows).
-- `source/render.py`: deterministic Playwright/Chromium renderer (viewport 1080x1350, device
-  scale factor 3) that also emits the mobile probe.
+- `source/infographic.html`: editable, self-contained visual source (no external assets or network
+  dependencies; CSS-only pipeline arrows).
+- `source/render.py`: deterministic Playwright/Chromium renderer (viewport 1080x1350, device scale
+  factor 3) that emits the mobile probe and reports panel overflow plus the rendered line count of
+  every headline, pipeline chip, step title, action line and merchant-owns pill.
