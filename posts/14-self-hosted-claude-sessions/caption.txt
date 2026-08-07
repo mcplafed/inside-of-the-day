@@ -1,0 +1,22 @@
+Claude Code just added self-hosted runners. Here is what that changes for a Team or Enterprise.
+
+First, the eligibility box: public beta, Team and Enterprise plans only, off until an admin enables it, and the runner host is Linux or macOS (a container counts). This is an enterprise capability, not a local-Claude upgrade.
+
+Three things it unlocks for a team:
+
+1. Start from anywhere, execute where the work lives. I start a session on web, mobile or desktop, and it runs on a VM or container I provision next to the repo, build tools and CI. Reviewing a PR on the web, I can run the actual build and tests inside the team environment. The runner image, its network egress and its credentials stay my responsibility.
+
+2. Use internal context without moving the execution environment. The runner operates where the approved repository checkout, CI artifacts and internal tools already exist - so I can investigate a failed build or update a service with the tools already inside the corporate environment. Be precise about the boundary: execution stays in your network, but prompts, tool results and the session transcript still go to api.anthropic.com. It is an execution plane, not an Anthropic-hosted control plane - not "everything stays local".
+
+3. Hand off work between sessions - explicitly. The same release adds cross-session messaging on macOS and Linux: ListAgents discovers live sessions, SendMessage passes the handoff - task, evidence path, decision taken, next safe action. One session investigates; the next receives an evidence-backed handoff instead of a copied chat summary. It is an explicit transport channel, not shared memory - a companion capability in the same release, not a documented end-to-end workflow with self-hosted runners.
+
+One more boundary: secrets are not automatically safe. Credential masking needs explicit configuration and TLS termination at the sandbox proxy - unconfigured is unprotected.
+
+My takeaway: self-hosted runners turn Claude Code from a session into a team execution plane. Just not a turnkey orchestrator - you still design concurrency, durable state and permissions.
+
+Sources
+https://github.com/anthropics/claude-code/releases/tag/v2.1.224
+https://code.claude.com/docs/en/self-hosted-environments
+https://code.claude.com/docs/en/sandboxing
+
+#InsideOfTheDay #ClaudeCode #AIAgents #SelfHosted #DeveloperInfrastructure

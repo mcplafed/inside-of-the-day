@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Claude Code just added self-hosted runners.</title>
+<style>
+:root{
+  --paper:#f5efe4;--ink:#26302f;--muted:#6a736e;--line:#d8cfc0;
+  --terra:#bd5a3c;--terraDark:#8f3e29;--terraBg:#f6e4da;
+  --blue:#3d6577;--blueBg:#e5edf1;
+  --green:#3f6b52;--greenBg:#e6eee8;
+  --white:#fffdf9;--band:#efe7d8;
+}
+*{box-sizing:border-box}
+html,body{margin:0;width:1080px;height:1350px;background:var(--paper)}
+body{color:var(--ink);font-family:Arial,"FreeSans",Helvetica,sans-serif;-webkit-font-smoothing:antialiased}
+.canvas{width:1080px;height:1350px;padding:20px 56px 20px;display:flex;flex-direction:column;overflow:hidden}
+
+/* ---------- header: news first ---------- */
+.eyebrow{font:700 17px/1.2 "Courier New",monospace;letter-spacing:1.4px;color:var(--terraDark);text-transform:uppercase}
+h1{margin:6px 0 0;font-weight:800;font-size:45px;line-height:.98;letter-spacing:-1.4px;text-transform:uppercase}
+.hook{margin:6px 0 0;font-weight:800;font-size:59px;line-height:.96;letter-spacing:-2px;
+      text-transform:uppercase;color:var(--terraDark)}
+.badges{margin-top:9px;display:flex;gap:10px;align-items:center}
+.badge{display:inline-block;background:var(--ink);color:var(--paper);border-radius:999px;
+       padding:9px 20px;font:700 17.5px/1.2 "Courier New",monospace;letter-spacing:.8px;text-transform:uppercase}
+.badge.alt{background:transparent;color:var(--ink);border:2px solid var(--ink);
+           font-size:15.5px;padding:7px 16px}
+
+/* ---------- hero mechanism ---------- */
+.hero{margin:8px 0 0;font-size:21.5px;line-height:1.2;font-weight:700;letter-spacing:-.3px;color:#3c4746}
+.flow{margin-top:7px;display:flex;flex-direction:column}
+.chips{display:flex;gap:10px}
+.chip{flex:1 1 0;border:2px solid var(--ink);border-radius:10px;background:var(--white);
+      text-align:center;padding:9px 4px;font:800 20px/1 Arial,"FreeSans",Helvetica,sans-serif;
+      letter-spacing:-.3px;text-transform:uppercase}
+.chips.dest .chip{background:var(--band);font-size:18px;padding:9px 3px}
+.chips.dest .chip.t1{background:var(--blueBg);border-color:var(--blue);color:var(--blue)}
+.chips.dest .chip.t2{background:var(--band)}
+.chips.dest .chip.t3{background:var(--greenBg);border-color:var(--green);color:var(--green)}
+.chips.dest .chip.t4{background:var(--terraBg);border-color:var(--terraDark);color:var(--terraDark)}
+.varrow{display:grid;place-items:center;padding:2px 0}
+.varrow span{display:block;width:0;height:0;border-top:14px solid var(--ink);
+             border-left:10px solid transparent;border-right:10px solid transparent}
+.runner{border:2.5px solid var(--terraDark);border-radius:14px;background:var(--terraDark);color:var(--white);
+        display:flex;align-items:center;justify-content:space-between;gap:16px;padding:11px 24px}
+.runner .t{font:800 31px/1 Arial,"FreeSans",Helvetica,sans-serif;letter-spacing:-.6px;text-transform:uppercase}
+.runner .s{font:700 15.5px/1.3 "Courier New",monospace;letter-spacing:.4px;color:#f3d9cc;text-align:right}
+.split{margin-top:6px;text-align:center;font-size:17px;line-height:1.25;color:var(--ink)}
+.split b{font-weight:800}
+.split .anth{color:var(--terraDark);font-weight:700}
+
+/* ---------- outcome cards ---------- */
+.cards{margin-top:9px;display:flex;flex-direction:column;gap:9px}
+.card{border:2px solid var(--ink);border-radius:14px;background:var(--white);overflow:hidden}
+.card .hd{display:flex;align-items:center;gap:12px;padding:8px 16px;border-bottom:2px solid var(--ink)}
+.card .ltr{flex:0 0 auto;width:33px;height:33px;border-radius:50%;color:#fff;
+           display:grid;place-items:center;font:800 20px/1 Arial,"FreeSans",Helvetica,sans-serif}
+.card .hd .t{font:800 23px/1.05 Arial,"FreeSans",Helvetica,sans-serif;letter-spacing:-.5px;text-transform:uppercase}
+.card .hd .sn{margin-left:auto;flex:0 0 auto;font:700 12.5px/1.25 "Courier New",monospace;
+              letter-spacing:.9px;color:var(--muted);text-transform:uppercase;text-align:right}
+.card.cA .hd{background:var(--blueBg)} .card.cA .ltr{background:var(--blue)} .card.cA .hd .t{color:var(--blue)}
+.card.cB .hd{background:var(--greenBg)} .card.cB .ltr{background:var(--green)} .card.cB .hd .t{color:var(--green)}
+.card.cC .hd{background:var(--terraBg)} .card.cC .ltr{background:var(--terra)} .card.cC .hd .t{color:var(--terraDark)}
+.card .bd{padding:7px 18px 9px}
+.row{font-size:20px;line-height:1.24;letter-spacing:-.2px;padding:3px 0}
+.row .m{font-family:"Courier New",monospace;font-size:18.5px;font-weight:700;color:var(--terraDark)}
+.row.guard{margin-top:3px;border-top:1px solid var(--line);padding-top:6px;font-weight:700;color:var(--terraDark)}
+
+/* ---------- secrets strip ---------- */
+.secrets{margin-top:8px;border:2px solid var(--terraDark);border-radius:10px;background:var(--terraBg);
+         padding:7px 16px;font-size:18px;line-height:1.25;font-weight:700;color:var(--terraDark)}
+.secrets b{font-weight:800;text-transform:uppercase;letter-spacing:.2px}
+
+/* ---------- takeaway ---------- */
+.take{margin-top:8px;border-top:2.5px solid var(--ink);padding-top:7px;
+      display:grid;grid-template-columns:46px 1fr;gap:14px;align-items:start}
+.mark{width:46px;height:46px;border-radius:50%;background:var(--terra);display:grid;place-items:center;
+      color:#fff;font:800 26px/1 Arial,"FreeSans",Helvetica,sans-serif}
+.take strong{display:block;font:800 27px/1.12 Arial,"FreeSans",Helvetica,sans-serif;
+             letter-spacing:-.5px;text-transform:uppercase}
+.take strong .g{color:var(--terraDark)}
+.take .caveat{display:block;margin-top:6px;font-size:16.5px;line-height:1.25;font-weight:700;color:var(--muted)}
+
+footer{margin-top:auto;padding-top:8px;border-top:1px solid var(--line);display:flex;
+       justify-content:space-between;align-items:center;gap:20px;
+       font:700 17px/1.2 "Courier New",monospace;color:#4a534f}
+footer .handle{color:var(--terraDark);white-space:nowrap}
+</style>
+</head>
+<body>
+<main class="canvas">
+ <div class="eyebrow">Inside of the Day &mdash; Claude Code 2.1.224 &middot; shipped 2026-08-07</div>
+ <h1>Claude Code just added<br>self&#8209;hosted runners.</h1>
+ <div class="hook">What does that unlock for your team?</div>
+ <div class="badges">
+  <span class="badge">Public beta &middot; Team &amp; Enterprise only &middot; Admin enabled</span>
+  <span class="badge alt">Linux / macOS runner hosts</span>
+ </div>
+
+ <p class="hero">Start a session from web, mobile or desktop.<br>Execute it on your own VM or container beside the work.</p>
+
+ <!-- mechanism: interface -> your runner -> what it sits beside -->
+ <section class="flow" aria-label="A session started on web, mobile or desktop executes on your self-hosted runner inside your network, next to repo, CI, internal tools and policies">
+  <div class="chips"><span class="chip">Web</span><span class="chip">Mobile</span><span class="chip">Desktop</span></div>
+  <div class="varrow"><span></span></div>
+  <div class="runner">
+   <span class="t">Your self-hosted runner</span>
+   <span class="s">inside your network<br>your VM / container &middot; Linux or macOS host</span>
+  </div>
+  <div class="varrow"><span></span></div>
+  <div class="chips dest">
+   <span class="chip t1">Repo</span><span class="chip t2">CI</span>
+   <span class="chip t3">Internal tools</span><span class="chip t4">Policies</span>
+  </div>
+  <div class="split"><b>Execution stays in your network.</b> <span class="anth">Inference and session transcripts still go to Anthropic.</span></div>
+ </section>
+
+ <section class="cards">
+
+  <article class="card cA">
+   <div class="hd"><span class="ltr">A</span><span class="t">Start from anywhere. Execute where the work lives.</span></div>
+   <div class="bd">
+    <div class="row">Web / mobile / desktop session &rarr; runner beside repo + CI.</div>
+    <div class="row">Review a PR on web. Run the actual build and tests in the team environment.</div>
+    <div class="row guard">You own the runner image, network egress and credentials.</div>
+   </div>
+  </article>
+
+  <article class="card cB">
+   <div class="hd"><span class="ltr">B</span><span class="t">Use internal context without moving the execution environment.</span></div>
+   <div class="bd">
+    <div class="row">Runner operates beside approved checkout, CI artifacts and internal tools.</div>
+    <div class="row">Investigate a failed build or update a service in place.</div>
+    <div class="row guard">Execution stays in your network. Prompts, tool results and transcripts still reach api.anthropic.com.</div>
+   </div>
+  </article>
+
+  <article class="card cC">
+   <div class="hd"><span class="ltr">C</span><span class="t">Hand off work between sessions &mdash; explicitly.</span><span class="sn">Same release &middot;<br>companion capability</span></div>
+   <div class="bd">
+    <div class="row"><span class="m">ListAgents</span> finds sessions. <span class="m">SendMessage</span> transfers task, evidence, decision and next safe action.</div>
+    <div class="row">One session investigates. The next gets an evidence-backed handoff, not a copied chat summary.</div>
+    <div class="row guard">Messaging is transport &mdash; not shared memory, not a turnkey multi-agent orchestrator.</div>
+   </div>
+  </article>
+
+ </section>
+
+ <div class="secrets"><b>Secrets are not automatically safe.</b> Masking needs explicit configuration and TLS termination.</div>
+
+ <section class="take">
+  <div class="mark">&#8594;</div>
+  <div>
+   <strong>Self-hosted runners turn Claude Code from a session into <span class="g">a team execution plane</span>.</strong>
+   <span class="caveat">Not a turnkey orchestrator. You still design concurrency, durable state and permissions.</span>
+  </div>
+ </section>
+
+ <footer><span class="src">github.com/anthropics/claude-code</span><span class="handle">@vitalylobachev</span></footer>
+</main>
+</body>
+</html>
