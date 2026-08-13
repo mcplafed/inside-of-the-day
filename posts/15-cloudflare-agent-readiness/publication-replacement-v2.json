@@ -1,0 +1,15 @@
+{
+  "replaces": {
+    "post_urn": "urn:li:share:7493605815606505472",
+    "post_url": "https://www.linkedin.com/feed/update/urn:li:share:7493605815606505472/",
+    "delete_status": 204
+  },
+  "replacement": {
+    "post_urn": "urn:li:share:7493608291424546816",
+    "post_url": "https://www.linkedin.com/feed/update/urn:li:share:7493608291424546816/",
+    "create_status": 201
+  },
+  "reason": "Replaced after approved typography-leading revision; v2 image has more vertical spacing.",
+  "asset": "posts/15-cloudflare-agent-readiness/assets/infographic.png",
+  "caption": "posts/15-cloudflare-agent-readiness/caption.txt"
+}
