@@ -1,5 +1,8 @@
 Cloudflare just added a diagnostic that answers a new website question: can an AI agent actually use it?
 
+Official Cloudflare release:
+https://blog.cloudflare.com/aeo/
+
 The first version of “web ready” meant: does it work in a browser?
 
 Now there is another visitor. It does not look at your hero image or click through your navigation. It needs to know whether it may enter, where content lives, which version is machine-readable, and what action surface it is allowed to inspect.
@@ -30,8 +33,7 @@ How to check your hostname:
 4. Use “Set up in Cloudflare” where the tool offers a supported setting (for example, Markdown for Agents or managed robots.txt). Otherwise use “Copy Agent Prompt” as a starting brief for the implementation work.
 5. Make one change, then re-scan. Do not treat a green check as authorization to take an action.
 
-Official release:
-https://blog.cloudflare.com/aeo/
+Official release documentation is linked immediately after the opening sentence above.
 
 One important boundary: Cloudflare’s Agent Readiness is a product diagnostic, not an industry certification. A passing result means an agent can find and inspect a surface. It does not mean the agent is authorized to act.
 
