@@ -1,0 +1,36 @@
+Cloudflare just added a diagnostic that answers a new website question: can an AI agent actually use it?
+
+The first version of “web ready” meant: does it work in a browser?
+
+Now there is another visitor. It does not look at your hero image or click through your navigation. It needs to know whether it may enter, where content lives, which version is machine-readable, and what action surface it is allowed to inspect.
+
+Cloudflare Agent Readiness Diagnostics scans a hostname through that path. It returns pass, fail, or neutral for every check, explains why it matters, and keeps the actual request/response evidence.
+
+The useful checklist is four gates:
+
+1. Can it enter?
+Crawler-readable robots.txt and AI-crawler rules say whether the agent is allowed through the front door.
+
+2. Can it find and read?
+An XML sitemap, clean Markdown and Content Signals make the site discoverable and understandable without scraping a human UI.
+
+3. Can it call the right surface?
+An API catalog, link headers and login instructions expose an explicit machine path instead of asking an agent to guess at HTML.
+
+4. Is it agent-native yet?
+OAuth discovery, MCP, A2A cards, a skills index, Web Bot Auth and WebMCP are richer surfaces to inspect when they fit the job.
+
+My practical order: fix the boring basics first; publish the explicit machine path next; then re-scan after every change. The evidence trail is more useful than a generic “AI-ready” label.
+
+One important boundary: Cloudflare’s Agent Readiness is a product diagnostic, not an industry certification. A passing result means an agent can find and inspect a surface. It does not mean the agent is authorized to act.
+
+Discoverable != authorized.
+
+Commerce signals such as x402, ACP, UCP and AP2 are informational in the tool at launch and are not counted in its readiness score. That is the right separation: agent discovery is not payment authorization.
+
+Agent discoverability is now a production surface.
+
+Source
+https://blog.cloudflare.com/aeo/
+
+#InsideOfTheDay #Cloudflare #AIAgents #AgentReadiness #DeveloperExperience
