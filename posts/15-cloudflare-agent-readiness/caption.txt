@@ -22,6 +22,17 @@ OAuth discovery, MCP, A2A cards, a skills index, Web Bot Auth and WebMCP are ric
 
 My practical order: fix the boring basics first; publish the explicit machine path next; then re-scan after every change. The evidence trail is more useful than a generic “AI-ready” label.
 
+How to check your hostname:
+
+1. Open the Cloudflare dashboard for the hostname you want to test.
+2. Run Agent Readiness Diagnostics and read the pass, fail, or neutral result for each check.
+3. Open the request/response evidence before treating a result as actionable.
+4. Use “Set up in Cloudflare” where the tool offers a supported setting (for example, Markdown for Agents or managed robots.txt). Otherwise use “Copy Agent Prompt” as a starting brief for the implementation work.
+5. Make one change, then re-scan. Do not treat a green check as authorization to take an action.
+
+Official release:
+https://blog.cloudflare.com/aeo/
+
 One important boundary: Cloudflare’s Agent Readiness is a product diagnostic, not an industry certification. A passing result means an agent can find and inspect a surface. It does not mean the agent is authorized to act.
 
 Discoverable != authorized.

@@ -33,7 +33,15 @@ Its readiness view ranges from **Not Ready** to fully agent-native. Each check r
    - x402, ACP, UCP, AP2
    - informational at launch; **not included in the readiness score**
 
-Cloudflare also says recommended improvements have a next step. When a Cloudflare setting is applicable, the product links to it; otherwise it offers a **Copy Agent Prompt**. Users can re-scan after a change.
+Cloudflare also says recommended improvements have a next step. When a Cloudflare setting is applicable, the product links to it through **Set up in Cloudflare** (examples given: Markdown for Agents or managed `robots.txt`); otherwise it offers a **Copy Agent Prompt**. Users make the change and re-scan.
+
+## Practical verification path used in the post
+
+1. Open the Cloudflare dashboard for the hostname to test.
+2. Run Agent Readiness Diagnostics and inspect each pass, fail, or neutral result.
+3. Review the request/response evidence before deciding what to change.
+4. Use **Set up in Cloudflare** only where the tool provides a supported setting; otherwise use **Copy Agent Prompt** as an implementation starting point.
+5. Make one change, re-scan, and keep the authorization boundary separate from the discovery result.
 
 ## Article boundary
 
