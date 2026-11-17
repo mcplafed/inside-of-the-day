@@ -1,0 +1,39 @@
+We retired 30 old model names last month. Nobody changed a line of code.
+
+My last post was about two swaps: gpt-5.4-mini → gpt-6-luna and gpt-5.4 → gpt-6.1-terra. Many people asked what else we moved. Here is the rest.
+
+We put one alias map in our LLM gateway. 30 old model names now point to 8 current models. Apps still ask for the old name and get the new model.
+
+Some of the swaps (price per 1M tokens, input / output):
+
+🔹 claude-4-5-sonnet → claude-5-5-sonnet
+$3 / $15 → $2 / $10 (−33%)
+Humanity's Last Exam: 7.2% → 55.0%
+
+🔹 claude-4-7-opus → claude-5-5-opus
+$5 / $25 → $4 / $20 (−20%)
+HLE: 42.3% → 61.4%
+
+🔹 gpt-5.5 → gpt-6.1-sol
+$5 / $30 → $2 / $10 (−60–67%)
+HLE: 45.8% → 52.9%
+
+🔹 gpt-5.6-terra → gpt-6.1-terra
+$2 / $12 → $1 / $5 (−50–58%)
+HLE: 42.9% → 46.2%
+
+🔹 gpt-5.2 → gpt-6.1-terra
+$1.75 / $14 → $1 / $5 (−43–64%)
+HLE: 37.7% → 46.2%
+
+How much does it save? With the same traffic and the new prices, about half of the bill. Most of the money came from the two swaps on our busiest models. The long tail saves little, but it removes another problem: vendors retire old models, and then your app just breaks.
+
+What we learned:
+• Retirement dates are free deadlines. Alias the name before the model disappears.
+• Hide old names from the model list, so nobody starts using them again.
+• Not every swap is safe to do silently. After a big generation jump the model can behave differently, so ask the owners to test first.
+• One swap was honest "cheaper, not smarter": half the price, one point lower on the benchmark. We still took it.
+
+Look at the model list in your gateway. How many of those names are older than a year?
+
+#LLM #AIEngineering #FinOps #LiteLLM #PlatformEngineering

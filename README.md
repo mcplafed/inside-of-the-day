@@ -15,6 +15,7 @@ Each post is a compact, evidence-backed operating insight about AI-assisted engi
 | 5 | Graphiti vs Graphify vs Cognee? I use them all. Here's why. | draft for review |
 | 12 | Don't bury a long agent session. | draft, issue #13 |
 | 13 | How often does your loop go out of control? | draft |
+| 14 | We retired 30 old model names. Nobody changed a line of code. | draft for review |
 
 See [strategy/series-plan.md](strategy/series-plan.md) for the editorial and publication plan.
 
