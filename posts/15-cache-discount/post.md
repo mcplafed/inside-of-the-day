@@ -8,17 +8,17 @@ Follow-up to #14: compare cache-read prices as well as ordinary input and output
 
 Standard API list prices in USD per 1M cache-read tokens, checked 18 November 2026. Savings compare the new model's cache-read rate with the old model's cache-read rate, not uncached input or the total request bill.
 
-| Old model → candidate | Old cache read | New cache read | Saving |
-|---|---:|---:|---:|
-| Claude Haiku 4.5 → Claude Haiku 5.5 | $0.10 | $0.01 | −90% |
-| GPT-5.4 mini → GPT-6 Luna | $0.075 | $0.01 | −87% |
-| GPT-5.4 → GPT-6.1 Terra | $0.25 | $0.05 | −80% |
-| GPT-5.5 → GPT-6.1 Sol | $0.50 | $0.10 | −80% |
-| Claude Sonnet 4.5 → Claude Sonnet 5.5 | $0.30 | $0.10 | −67% |
+| Old model → candidate | Input / output, old → new | Old cache read | New cache read | Cache-read saving |
+|---|---|---:|---:|---:|
+| Claude Haiku 4.5 → Claude Haiku 5.5 | $1 / $5 → $0.10 / $0.50 | $0.10 | $0.01 | −90% |
+| GPT-5.4 mini → GPT-6 Luna | $0.75 / $4.50 → $0.10 / $0.50 | $0.075 | $0.01 | −87% |
+| GPT-5.4 → GPT-6.1 Terra | $2.50 / $15 → $1 / $5 | $0.25 | $0.05 | −80% |
+| GPT-5.5 → GPT-6.1 Sol | $5 / $30 → $2 / $10 | $0.50 | $0.10 | −80% |
+| Claude Sonnet 4.5 → Claude Sonnet 5.5 | $3 / $15 → $2 / $10 | $0.30 | $0.10 | −67% |
 
 Formula: `(1 − new cache-read rate / old cache-read rate) × 100`, rounded to the nearest whole percent. Mini → Luna is 86.67%; Sonnet is 66.67%.
 
-Haiku 5.5's $0.01 rate applies to prompts ≤100k tokens. Above 100k, its $0.05 cache-read rate gives a 50% reduction versus Haiku 4.5, not 90%.
+All listed Haiku 5.5 prices apply to prompts ≤100k tokens. Its $0.01 cache-read rate applies to prompts ≤100k tokens. Above 100k, its $0.05 cache-read rate gives a 50% reduction versus Haiku 4.5, not 90%.
 
 ## Capability as well as price
 

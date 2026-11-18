@@ -6,13 +6,13 @@ When your apps reuse the same instructions, tool definitions or documents, cache
 
 This isn’t just a price trade-off. Newer models can outperform their predecessors while costing less. Check that advantage on your own tasks, not just a benchmark.
 
-A few swaps worth testing today. Cache reads per 1M tokens:
+A few swaps worth testing today. USD per 1M tokens. Input / output; cache read:
 
-• Claude Haiku 4.5 → 5.5: $0.10 → $0.01 (−90%*)
-• GPT-5.4 mini → GPT-6 Luna: $0.075 → $0.01 (−87%)
-• GPT-5.4 → GPT-6.1 Terra: $0.25 → $0.05 (−80%)
-• GPT-5.5 → GPT-6.1 Sol: $0.50 → $0.10 (−80%)
-• Claude Sonnet 4.5 → 5.5: $0.30 → $0.10 (−67%)
+• Claude Haiku 4.5 → 5.5: input/output $1/$5 → $0.10/$0.50; cache $0.10 → $0.01 (−90%*)
+• GPT-5.4 mini → GPT-6 Luna: input/output $0.75/$4.50 → $0.10/$0.50; cache $0.075 → $0.01 (−87%)
+• GPT-5.4 → GPT-6.1 Terra: input/output $2.50/$15 → $1/$5; cache $0.25 → $0.05 (−80%)
+• GPT-5.5 → GPT-6.1 Sol: input/output $5/$30 → $2/$10; cache $0.50 → $0.10 (−80%)
+• Claude Sonnet 4.5 → 5.5: input/output $3/$15 → $2/$10; cache $0.30 → $0.10 (−67%)
 
 The cache needs to warm up after a switch, and writes have their own price. The actual saving depends on how often your prompts are reused, cache hits, output tokens and retries.
 
@@ -20,6 +20,6 @@ So don’t just compare the price list. Test on your own traffic and measure the
 
 Open your gateway’s usage report. How much are you paying to read the same context again?
 
-*Haiku 5.5 price applies to prompts up to 100k tokens. Standard API list rates, per 1M cache-read tokens, checked 18 November 2026. Percentages rounded. Tokenization and cache rules differ between models.
+*Haiku 5.5 price applies to prompts up to 100k tokens. Percentages describe cache-read savings only. Standard API list rates, checked 18 November 2026. Percentages rounded. Tokenization and cache rules differ between models.
 
 #LLM #AIEngineering #FinOps #PromptCaching #PlatformEngineering
