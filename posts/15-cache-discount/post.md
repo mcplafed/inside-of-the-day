@@ -20,6 +20,10 @@ Formula: `(1 − new cache-read rate / old cache-read rate) × 100`, rounded to 
 
 Haiku 5.5's $0.01 rate applies to prompts ≤100k tokens. Above 100k, its $0.05 cache-read rate gives a 50% reduction versus Haiku 4.5, not 90%.
 
+## Capability as well as price
+
+Newer models can outperform their predecessors while costing less. This is a reason to test the candidates, not a claim that every replacement wins on every task. Validate quality, tool use and reliability alongside cost per successful task. No unverified benchmark scores are included.
+
 ## Scope and caveats
 
 - These are candidates worth testing, not guaranteed drop-in replacements.

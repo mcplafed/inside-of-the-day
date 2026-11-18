@@ -4,6 +4,8 @@ Up to 90% off cached input. Are you comparing cache prices too?
 
 When your apps reuse the same instructions, tool definitions or documents, cached input can be a big part of the bill. And newer models can be much cheaper here too.
 
+This isn’t just a price trade-off. Newer models can outperform their predecessors while costing less. Check that advantage on your own tasks, not just a benchmark.
+
 A few swaps worth testing today. Cache reads per 1M tokens:
 
 • Claude Haiku 4.5 → 5.5: $0.10 → $0.01 (−90%*)
