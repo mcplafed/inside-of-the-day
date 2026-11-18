@@ -1,0 +1,23 @@
+Your AI bill has a hidden discount.
+
+Up to 90% off cached input. Are you comparing cache prices too?
+
+When your apps reuse the same instructions, tool definitions or documents, cached input can be a big part of the bill. And newer models can be much cheaper here too.
+
+A few swaps worth testing today. Cache reads per 1M tokens:
+
+• Claude Haiku 4.5 → 5.5: $0.10 → $0.01 (−90%*)
+• GPT-5.4 mini → GPT-6 Luna: $0.075 → $0.01 (−87%)
+• GPT-5.4 → GPT-6.1 Terra: $0.25 → $0.05 (−80%)
+• GPT-5.5 → GPT-6.1 Sol: $0.50 → $0.10 (−80%)
+• Claude Sonnet 4.5 → 5.5: $0.30 → $0.10 (−67%)
+
+The cache needs to warm up after a switch, and writes have their own price. The actual saving depends on how often your prompts are reused, cache hits, output tokens and retries.
+
+So don’t just compare the price list. Test on your own traffic and measure the cost per successful task.
+
+Open your gateway’s usage report. How much are you paying to read the same context again?
+
+*Haiku 5.5 price applies to prompts up to 100k tokens. Standard API list rates, per 1M cache-read tokens, checked 18 November 2026. Percentages rounded. Tokenization and cache rules differ between models.
+
+#LLM #AIEngineering #FinOps #PromptCaching #PlatformEngineering

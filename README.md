@@ -16,6 +16,7 @@ Each post is a compact, evidence-backed operating insight about AI-assisted engi
 | 12 | Don't bury a long agent session. | draft, issue #13 |
 | 13 | How often does your loop go out of control? | draft |
 | 14 | We retired 30 old model names. Nobody changed a line of code. | draft for review |
+| 15 | Your AI bill has a hidden discount. | draft for review |
 
 See [strategy/series-plan.md](strategy/series-plan.md) for the editorial and publication plan.
 
