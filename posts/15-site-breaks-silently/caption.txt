@@ -1,16 +1,16 @@
 Client sites break after routine updates. Nobody notices until leads drop.
 
-Google and AI assistants read what your site serves today. Not what it served at launch.
+Google and AI assistants read what your site serves today.
 
 Three changes that look harmless:
 
 🔹 Plugin update adds noindex → the page drops out of Google.
-WordPress runs 38.4% of all websites.
+Google drops a page from results once it crawls the tag.
 
 🔹 Sitemap removed or moved → new pages stop getting found.
 Google says pages that nothing links to may never be discovered.
 
-🔹 TLS certificate lapses → visitors see a browser warning first.
+🔹 Security certificate lapses → visitors see a browser warning first.
 Maximum certificate life falls from 398 to 47 days by March 2029. More renewals to miss.
 
 I built Onbiom (onbiom.com) for this. The check is free. Starter is $19/month: it re-checks weekly and emails you within a day when something that worked stops working.
